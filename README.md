@@ -1,4 +1,4 @@
-# trino-minio-docker
+# Modern data stack
 
 Minimal example to run Trino with Minio and the Hive standalone metastore on Docker. The data used in this tutorial is from Microsoft AdventureWorks database.  
 
