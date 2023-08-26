@@ -3,9 +3,9 @@
 Minimal example integrating in Docker the following components:
 
 ```bash
-  **Trino** 425
-  **MinIO** release of 2023.08.24 in Docker Hub
-  **Apache Hive standalone metastore (HMS)** v3.0.0
+  - Trino: 425
+  - MinIO: release of 2023.08.24 in Docker Hub
+  - HMS (Apache Hive standalone metastore): v3.0.0
 ```
 
 [Note of 2023/08/26] Trino does not work with Apache Hive 4 (beta1). The current official [Apache Hive docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start properly in version 3.1.3. 
