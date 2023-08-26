@@ -19,35 +19,34 @@ Pull and run all services with:
 docker-compose up
 ```
 
-Configure `s3cmd` with (or use the `minio.s3cfg` configuration):
+Connect to `http://localhost:9000` using the username and password provided to docker-compose in an .env file and create the access key and secret.
+
+Configure `s3cmd` by creating file ~/.s3cfg:
 
 ```bash
-s3cmd --config minio.s3cfg --configure
+# Setup endpoint
+host_base = localhost:9000
+host_bucket = localhost:9000
+use_https = False
+
+# Setup access keys
+access_key = ACCESS_KEY
+secret_key = SECRET_KEY
+
+# Enable S3 v4 signature APIs
+signature_v2 = False
 ```
 
-Use the following configuration for the `s3cmd` configuration when prompted:
-
-```
-Access Key: minio_access_key
-Secret Key: minio_secret_key
-Default Region [US]:
-S3 Endpoint [s3.amazonaws.com]: localhost:9000
-DNS-style bucket+hostname:port template for accessing a bucket [%(bucket)s.s3.amazonaws.com]: localhost:9000
-Encryption password:
-Path to GPG program [/usr/bin/gpg]:
-Use HTTPS protocol [Yes]: no
-```
-
-To create a bucket and upload data to minio, type:
+To create a bucket called `minio-dlk` and upload data to minio, type:
 
 ```bash
-s3cmd --config minio.s3cfg mb s3://minio-dlk
-s3cmd --config minio.s3cfg put data/sales_summary.parquet s3://minio-dlk/sales/sales_summary.parquet
+s3cmd mb s3://minio-dlk
+s3cmd put data/sales_summary.parquet s3://minio-dlk/sales/sales_summary.parquet
 ```
 To list all object in all buckets, type:
 
 ```bash
-s3cmd --config minio.s3cfg la
+s3cmd la
 ```
 
 ## Access Trino with CLI and Prepare Table
