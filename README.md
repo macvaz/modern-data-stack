@@ -12,7 +12,7 @@ Minimal example integrating in Docker the following components:
 
 **[Note of 2023/08/26]** Trino does not work with Apache Hive 4 (beta1). HMS v4.0.0-beta-1 starts perfectly but some incompatibility isues arise when using trino. 
 
-Trino uses [version 3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393) of the Metastore Thift API and HMS 4.0 changes the Thrift interface. The practical results integrating latest versions of Trino and HMS can be checked at [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4)
+Trino uses [version 3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393) of the Metastore Thift API and HMS 4.0 changes the Thrift interface. This errors can be easily reproduced using [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4) of this repo.
 
 I started working with HMS 3.1.3 but current official [Apache Hive docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start properly showing some database initializacions errors. Consecuently, this repo uses an old (v3.0.0) and unoffical docker container of HMS coming from https://github.com/bitsondatadev/hive-metastore
 
