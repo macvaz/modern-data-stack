@@ -26,19 +26,20 @@ services:
       - trino-network
 
   hive-metastore:
-    hostname: hive-metastore #3.0.0 is a very old HMS version
+    hostname: hive-metastore 
     container_name: hive-metastore
-    image: bitsondatadev/hive-metastore:latest
+    image: macvaz82/hive-metastore:3.1.3
     ports:
       - 9083:9083 # Metastore Thrift
     volumes:
-      - ./conf/hive-metastore/metastore-site.xml:/opt/apache-hive-metastore-3.0.0-bin/conf/metastore-site.xml:ro
+      - ./conf/hive-metastore/metastore-site.xml:/opt/apache-hive-metastore-3.1.3-bin/conf/metastore-site.xml:ro
     ulimits:
       nofile:
         soft: 65536
         hard: 65536
     environment:
       METASTORE_DB_HOSTNAME: mariadb
+      METASTORE_TYPE: mysql
     depends_on:
       - mariadb
     networks:
