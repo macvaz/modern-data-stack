@@ -16,7 +16,7 @@ Trino uses [version 3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d55
 
 I started working with HMS 3.1.3 but current official [Apache Hive docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start properly showing some database initializacions errors.
 
-Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-metastore) forked and updated from [this](https://github.com/bitsondatadev/hive-metastore) unoffial repo. Original repo was outdated (based on HMS 3.0.0 from 2018/06). I migrating it from v3.0.0 to v3.1.3 (latest HMS 3.x version available)
+Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-metastore) forked and updated from [this](https://github.com/bitsondatadev/hive-metastore) unoffial repo. Original repo was outdated (based on HMS 3.0.0 from 2018/06). I migrated it from v3.0.0 to v3.1.3 (latest HMS 3.x version available)
 
 ## Installation and Setup
 
