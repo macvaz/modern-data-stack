@@ -51,7 +51,7 @@ To list all object in all buckets, type:
 s3cmd la
 ```
 
-## Access Trino with CLI and Prepare Table
+## Access Trino with CLI
 
 Download trino cli with:
 
@@ -66,7 +66,9 @@ Or use trino client installed in the trino container:
 docker exec -it trino trino
 ```
 
-## Create Trino database infrastructure
+## Create Trino database infrastructure (DDL)
+
+Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS). This big data table can be read using trino using SQL and by native Big Data technologies like Apache Spark. 
 
 ```bash
 ./trino
