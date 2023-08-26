@@ -10,7 +10,7 @@ Minimal example integrating in Docker the following components:
 
 ## Compatibility issues
 
-*[Note of 2023/08/26]* Trino does not work with Apache Hive 4 (beta1). HMS v4.0.0-beta-1 starts perfectly but some incompatibility isues arise when using trino. 
+*Note of 2023/08/26:* Trino does not work with Apache Hive 4 (beta1). HMS v4.0.0-beta-1 starts perfectly but some incompatibility isues arise when using trino. 
 
 Trino uses [version 3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393) of the Metastore Thift API and HMS 4.0 changes the Thrift interface. The practical results integrating latest versions of Trino and HMS can be checked at [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4)
 
