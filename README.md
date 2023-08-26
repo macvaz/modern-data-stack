@@ -19,9 +19,9 @@ Pull and run all services with:
 docker-compose up
 ```
 
-Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and create a pair of `access key` and `secret key`. This credentials should be added to [metastore-site.xml](conf/hive-metastore/metastore-site.xml) and [catalog/minio.properties](conf/trino/etc/catalog/minio.properties) in order to integrate HMS, MinIO and trino.
+Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and **create a pair of `access key` and `secret key`**. This credentials should be added to [metastore-site.xml](conf/hive-metastore/metastore-site.xml) and [catalog/minio.properties](conf/trino/etc/catalog/minio.properties) in order to integrate HMS, MinIO and trino.
 
-The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a Proxmox VM**. I decided to hardcode them in order to keep things simple for the reader. 
+The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a VM**. I decided to hardcode them in order to keep things simple for the reader. 
 
 Configure `s3cmd` by creating file ~/.s3cfg:
 
@@ -51,14 +51,14 @@ To list all object in all buckets, type:
 s3cmd la
 ```
 
-## Access Trino with CLI
+## Access Trino
 
 Download trino cli with:
 
 ```bash
 wget https://repo1.maven.org/maven2/io/trino/trino-cli/425/trino-cli-425-executable.jar \
   -O trino
-chmod +x trino  # Make it executable
+chmod +x trino
 ```
 
 Or use trino client installed in the trino container:
@@ -66,7 +66,7 @@ Or use trino client installed in the trino container:
 docker exec -it trino trino
 ```
 
-## Trino DDLs on MinIO
+## Trino DDLs on minio catalog
 
 Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This Big Data table (**minio.sales.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
 
