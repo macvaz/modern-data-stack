@@ -29,15 +29,17 @@ sudo apt install -y \
     openjdk-11-jre-headless  # Needed for trino-cli
 ```
 
+All the components are distributed as docker containers, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some configuration files for both HMS and trino are included in this repo in [conf directory](conf).
+
 Pull and run all services with:
 
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 
 Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and **create a pair of `access key` and `secret key`**. This credentials should be added to [metastore-site.xml](conf/hive-metastore/metastore-site.xml) and [catalog/minio.properties](conf/trino/etc/catalog/minio.properties) in order to integrate HMS, MinIO and trino.
 
-The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a VM**. I decided to hardcode them in order to keep things simple for the reader. 
+The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a one-off VM**. I decided to hardcode them in order to keep things simple for the reader. 
 
 Configure `s3cmd` by creating file ~/.s3cfg:
 
