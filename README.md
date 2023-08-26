@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example to run Trino with Minio and the Hive standalone metastore on Docker. The data used in this tutorial is from Microsoft AdventureWorks database.  
+Minimal example to run Trino with Minio and the Hive standalone metastore (HMS) on Docker.
 
 ## Installation and Setup
 
@@ -19,7 +19,9 @@ Pull and run all services with:
 docker-compose up
 ```
 
-Connect to `http://localhost:9000` using the username and password provided to docker-compose in an .env file and create the access key and secret.
+Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and create a pair of `access key` and `secret key`. This credentials should be added to [metastore-site.xml](conf/hive-metastore/metastore-site.xml) and [catalog/minio.properties](conf/trino/etc/catalog/minio.properties) in order to integrate HMS, minIO and trino.
+
+The basic autentication scheme in MinOP for buckets is based on based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. The keys used in this repo are disposable, created adhoc in a Proxmox VM. I decided to hardcode them in order to keep things simple for the reader. 
 
 Configure `s3cmd` by creating file ~/.s3cfg:
 
@@ -30,8 +32,8 @@ host_bucket = localhost:9000
 use_https = False
 
 # Setup access keys
-access_key = ACCESS_KEY
-secret_key = SECRET_KEY
+access_key = cTI5BM9ecjv6qISgGaHP
+secret_key = gJslk7jC1IJqOpDAVoV0fPXFS0WKDcSX9zBGd3f1
 
 # Enable S3 v4 signature APIs
 signature_v2 = False
