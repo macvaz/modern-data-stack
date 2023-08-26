@@ -29,7 +29,7 @@ sudo apt install -y \
     openjdk-11-jre-headless  # Needed for trino-cli
 ```
 
-All the components are distributed as **docker containers**, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some additional configuration files for both HMS and trino are also included in this repo in [conf directory](conf).
+All the components are distributed as **docker containers**, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some additional configuration files for both HMS and trino are also included in this repo in [conf directory](conf) an used in the compose.
 
 Start all docker containers with:
 
