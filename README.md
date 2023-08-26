@@ -92,7 +92,7 @@ Or use trino client installed in the trino container:
 docker exec -it trino trino
 ```
 
-## Using trino
+## Using Trino
 
 Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This Big Data table (**minio.sales.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
 
