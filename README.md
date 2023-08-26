@@ -5,7 +5,17 @@ Minimal example integrating the docker images of the following Big Data open-sou
 ```bash
   - Trino: v425
   - MinIO: v2023.08.23
-  - HMS (Apache Hive standalone metastore): v3.1.3
+  - HMS (Hive MetaStore): v3.1.3
+```
+
+## Other open-source big data products to consider
+
+Since the open-source big data ecosystem is vivid, this stack is always evolving. At least, in this repo the most promising projects are considered:
+
+```bash
+  - OpenMetadata (data catalog)
+  - dbt (data transformation)
+  - Apache Ranger (data security)
 ```
 
 ## Compatibility issues
