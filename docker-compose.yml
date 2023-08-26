@@ -17,6 +17,8 @@ services:
     image: mariadb:10.5.8
     ports:
       - 3306:3306 # MariaDB for Hive Meta Store (HMS)
+    volumes:
+      - mariadb-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       MYSQL_USER: $MYSQL_USER
@@ -63,6 +65,9 @@ services:
 
 volumes:
   minio-data:
+    driver: local
+  
+  mariadb-data:
     driver: local
 
 networks:
