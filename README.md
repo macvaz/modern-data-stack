@@ -8,7 +8,7 @@ Minimal example integrating the docker images of the following Big Data open-sou
   - HMS (Hive MetaStore): v3.1.3
 ```
 
-Since the open-source big data ecosystem is vivid, this modern-data-stack is always evolving. Currently, only the above projects are integrated but in a near future,  other complementary and promising projects will be considered to be integrated like:
+Since the open-source big data ecosystem is vivid, this **modern data stack** is always evolving. Currently, only the above projects are integrated but in a near future,  other complementary and promising projects will be considered to be integrated:
 
 ```bash
   - OpenMetadata (data catalog)
