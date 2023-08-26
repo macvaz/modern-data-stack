@@ -8,9 +8,7 @@ Minimal example integrating the docker images of the following Big Data open-sou
   - HMS (Hive MetaStore): v3.1.3
 ```
 
-## Other open-source big data products to consider
-
-Since the open-source big data ecosystem is vivid, this stack is always evolving. At least, in this repo the most promising projects are considered:
+Since the open-source big data ecosystem is vivid, this modern-data-stack is always evolving. Currently, only the above projects are integrated but in a near future,  other complementary and promising projects will be considered to be integrated like:
 
 ```bash
   - OpenMetadata (data catalog)
@@ -28,7 +26,7 @@ I started working with HMS 3.1.3 but current official [Apache Hive docker image]
 
 Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-metastore) forked and updated from [this](https://github.com/bitsondatadev/hive-metastore) unoffial repo. Original repo was outdated (based on HMS 3.0.0 from 2018/06). I migrated it from v3.0.0 to v3.1.3 (latest HMS 3.x version available)
 
-## Installation and Setup
+## Installation
 
 Install [s3cmd](https://s3tools.org/s3cmd) with:
 
@@ -94,7 +92,7 @@ Or use trino client installed in the trino container:
 docker exec -it trino trino
 ```
 
-## Trino DDLs on minio catalog
+## Using trino
 
 Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This Big Data table (**minio.sales.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
 
