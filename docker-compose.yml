@@ -26,7 +26,7 @@ services:
       - trino-network
 
   hive-metastore:
-    hostname: hive-metastore
+    hostname: hive-metastore #3.0.0 is a very old HMS version
     container_name: hive-metastore
     image: bitsondatadev/hive-metastore:latest
     ports:
