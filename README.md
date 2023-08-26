@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example integrating the docker images of the following big data components:
+Minimal example integrating the docker images of the following Big Data open-source components:
 
 ```bash
   - Trino: v425
