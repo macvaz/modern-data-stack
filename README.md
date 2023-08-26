@@ -66,9 +66,9 @@ Or use trino client installed in the trino container:
 docker exec -it trino trino
 ```
 
-## Create Trino database infrastructure (DDL)
+## Create Trino DDLs on MinIO
 
-Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS). This big data table can be read using trino using SQL and by native Big Data technologies like Apache Spark. 
+Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This big data table (minio.sales.sales) can be read using both trino using SQL and by native Big Data technologies like Apache Spark. 
 
 ```bash
 ./trino
