@@ -6,6 +6,7 @@ Minimal example integrating docker images of the following Big Data open-source 
   - Trino: v425
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
+  - Apache Ranger: v2.4.0
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern data stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -13,18 +14,27 @@ Since the open-source big data ecosystem is vibrant, this **modern data stack is
 ```bash
   - OpenMetadata (data catalog)
   - dbt (data transformation)
-  - Apache Ranger (data security)
 ```
 
 ## Compatibility issues
 
-**[2023/08/26]** Trino v425 does not work with Apache Hive 4 (beta1). HMS v4.0.0-beta-1 container starts perfectly but some incompatibility isues arise when using trino. 
+### Hive MetaStore
 
-Trino uses [version 3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393) of the Metastore Thift API and HMS 4.0 changes the Thrift interface. This errors can be easily reproduced using [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4) of this repo.
+**[2023/08/26]** Since Apache Hive team publishes in [docker hub](https://hub.docker.com/r/apache/hive/tags) linux/amd64 images for both v3 and v4 (alpha and beta prereleases), I decided to test them:
+ * Both alpha v4 and beta v4 prereleases work perfectly well but Trino v425 is only compatible with [Hive Metastore Thrift API v3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393). In real life usage, this produces some incompatibility errors when using trino that can be easily reproduced using [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4) of this repo.
 
-I started working with HMS 3.1.3 but current official [Apache Hive docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start properly showing some database initializacions errors.
+ * [Hive 3.1.3 docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start, showing database initializacions errors.
 
-Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-metastore) forked and updated from [this](https://github.com/bitsondatadev/hive-metastore) unoffial repo. Original repo was outdated (based on HMS 3.0.0 from 2018/06). I migrated it from v3.0.0 to v3.1.3 (latest HMS 3.x version available)
+Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-metastore) forked and updated from [this](https://github.com/bitsondatadev/hive-metastore) unoffial repo. Original repo was outdated (based on HMS 3.0.0 from 2018/06). I migrated it to v3.1.3 (latest HMS 3.x version available)
+
+### Apache Ranger
+
+**[2023/08/27]** Since Apache Ranger team publishes in [docker hub](https://hub.docker.com/search?q=apache%2Franger) only linux/arm64 images, I got platform errors like "exec format error". Docker support from the Apache Ranger team is poor, **forcing users to build their own images** since can't be downloaded from docker hub.
+
+The most relevant links of the Docker support from Ranger team are the following:
+* https://github.com/apache/ranger/tree/master/dev-support/ranger-docker
+* https://cwiki.apache.org/confluence/display/RANGER/Running+Apache+Ranger+-++%5BFrom+source%5D+in+minutes
+
 
 ## Installation
 
