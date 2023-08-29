@@ -7,9 +7,9 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./conf/trino/etc:/etc/trino:ro
+      - ./docker/trino/etc:/etc/trino:ro
     networks:
-      - trino-network
+      - data-stack
 
   mariadb:
     hostname: mariadb
@@ -25,16 +25,17 @@ services:
       MYSQL_PASSWORD: $MYSQL_PASSWORD
       MYSQL_DATABASE: metastore_db
     networks:
-      - trino-network
+      - data-stack
 
   hive-metastore:
+    build: docker/hive-metastore
     hostname: hive-metastore 
     container_name: hive-metastore
-    image: macvaz82/hive-metastore:3.1.3
+    image: hive-metastore:3.1.3
     ports:
       - 9083:9083 # Metastore Thrift
     volumes:
-      - ./conf/hive-metastore/metastore-site.xml:/opt/apache-hive-metastore-3.1.3-bin/conf/metastore-site.xml:ro
+      - ./docker/hive-metastore/metastore-site.xml:/opt/apache-hive-metastore-3.1.3-bin/conf/metastore-site.xml:ro
     ulimits:
       nofile:
         soft: 65536
@@ -45,7 +46,7 @@ services:
     depends_on:
       - mariadb
     networks:
-      - trino-network
+      - data-stack
 
   minio:
     hostname: minio
@@ -61,7 +62,7 @@ services:
       MINIO_ROOT_PASSWORD: $MINIO_USER_PASSWORD
     command: server --console-address ":9001" /data
     networks:
-      - trino-network
+      - data-stack
 
 volumes:
   minio-data:
@@ -71,5 +72,5 @@ volumes:
     driver: local
 
 networks:
-  trino-network:
+  data-stack:
     driver: bridge
