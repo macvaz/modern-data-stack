@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example integrating docker images of the following Big Data open-source components:
+Minimal example integrating docker images of the following Big Data open-source projects:
 
 ```bash
   - Trino: v425
@@ -114,10 +114,3 @@ select * from minio.sales.sales;
  * Both alpha v4 and beta v4 prereleases work perfectly well but Trino v425 is only compatible with [Hive Metastore Thrift API v3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393). In real life usage, this produces some incompatibility errors when using trino that can be easily reproduced using [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4) of this repo.
 
  * [Official Hive 3.1.3 docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start, showing database initializacions errors. Consecuently, I wrote the Dockerfile for installing HMS 3.1.3.
-
-### Apache Ranger
-
-**[2023/08/27]** Since Apache Ranger team publishes in [docker hub](https://hub.docker.com/search?q=apache%2Franger) only linux/arm64 images, I got platform errors like "exec format error". Docker support from the Apache Ranger team is poor, **forcing users to build their own images** since can't be downloaded from docker hub.
-
-The most relevant links of the Docker support from Ranger team is the following:
-* https://cwiki.apache.org/confluence/display/RANGER/Running+Apache+Ranger+-++%5BFrom+source%5D+in+minutes
