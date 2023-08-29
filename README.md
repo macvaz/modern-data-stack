@@ -8,7 +8,7 @@ Minimal example integrating docker images of the following Big Data open-source 
   - HMS (Hive MetaStore): v3.1.3
 ```
 
-Since the open-source big data ecosystem is vibrant, this **modern data stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
+Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
 ```bash
   - OpenMetadata (data catalog)
@@ -26,7 +26,7 @@ sudo apt install -y \
     openjdk-11-jre-headless  # Needed for trino-cli
 ```
 
-All the components are distributed as **docker containers**, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some additional configuration files for both HMS and trino are also included in this repo in [conf directory](conf) an used in the compose.
+All the components are distributed as **docker containers**, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some additional configuration files for both HMS and trino are also included in this repo.
 
 Start all docker containers with:
 
@@ -34,7 +34,7 @@ Start all docker containers with:
 docker-compose up -d
 ```
 
-Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and **create a pair of `access key` and `secret key`**. This credentials should be added to [metastore-site.xml](conf/hive-metastore/metastore-site.xml) and [catalog/minio.properties](conf/trino/etc/catalog/minio.properties) in order to integrate HMS, MinIO and trino.
+Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided to docker-compose via `.env file` and **create a pair of `access key` and `secret key`**. This credentials should be added to [metastore-site.xml](docker/hive-metastore/metastore-site.xml) and [catalog/minio.properties](docker/trino/etc/catalog/minio.properties) in order to integrate HMS, MinIO and trino.
 
 The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a one-off VM**. I decided to hardcode them in order to keep things simple for the reader. 
 
