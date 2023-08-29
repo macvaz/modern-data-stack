@@ -63,6 +63,39 @@ services:
     command: server --console-address ":9001" /data
     networks:
       - data-stack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  etl-tools:
+    build: docker/etl-tools
+    hostname: etl-tools
+    container_name: etl-tools
+    environment:
+      - AWS_ACCESS_KEY_ID=minio
+      - AWS_SECRET_ACCESS_KEY=minio123
+      - AWS_REGION=us-east-1
+    volumes:
+      - ./data/html:/var/lib/html
+      - ./data/stage:/var/lib/stage
+      - ./data/spark/notebooks:/var/lib/notebooks
+      - ./projects/dbt:/var/lib/dbt
+    ports:
+      - 8888:8888   # Spark notebook port
+      - 7077:7077   # Spark port
+      - 8061:8061   # Spark master web ui port
+      - 8062:8062   # Spark worker web ui port
+      - 10009:10009 # Kyuubi JDBC port
+      - 18080:18080 # Spark history web ui port
+    networks:
+      - data-stack
+    command: 
+      - notebook
+    depends_on:
+      minio:
+        condition: service_healthy
 
 volumes:
   minio-data:
