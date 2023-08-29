@@ -68,7 +68,7 @@ services:
       - mariadb
     networks:
       - trino-network
- 
+
   ##################
   # Apache Ranger
   ##################
@@ -76,7 +76,7 @@ services:
   ranger:
     hostname: ranger
     container_name: ranger
-    image: apache/ranger:2.4.0
+    image: ranger
     networks:
       - trino-network
     ports:
@@ -100,7 +100,7 @@ services:
   ranger-zk:
     container_name: ranger-zk
     hostname: ranger-zk
-    image: apache/ranger-zk:2.4.0
+    image: ranger-zk
     networks:
       - trino-network
     ports:
@@ -109,7 +109,7 @@ services:
   ranger-solr:
     container_name: ranger-solr
     hostname: ranger-solr
-    image: apache/ranger-solr:2.4.0
+    image: ranger-solr
     networks:
       - trino-network
     ports:
@@ -118,11 +118,11 @@ services:
       - solr-precreate
       - ranger_audits
       - /opt/solr/server/solr/configsets/ranger_audits/
-  
+
   ranger-db:
     container_name: ranger-postgres
     hostname: ranger-db
-    image: apache/ranger-db:2.4.0
+    image: ranger-postgres
     networks:
       - trino-network
     healthcheck:
@@ -130,6 +130,7 @@ services:
       interval: 10s
       timeout: 2s
       retries: 30
+
 
 volumes:
   minio-data:

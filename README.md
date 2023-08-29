@@ -6,7 +6,7 @@ Minimal example integrating docker images of the following Big Data open-source 
   - Trino: v425
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
-  - Apache Ranger: v2.4.0
+  - Apache Ranger: v3.0.0-SNAPSHOT (not working yet, this branch is for that integration)
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern data stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -31,8 +31,7 @@ Consecuently, I created [hive-metastore repo](https://github.com/macvaz/hive-met
 
 **[2023/08/27]** Since Apache Ranger team publishes in [docker hub](https://hub.docker.com/search?q=apache%2Franger) only linux/arm64 images, I got platform errors like "exec format error". Docker support from the Apache Ranger team is poor, **forcing users to build their own images** since can't be downloaded from docker hub.
 
-The most relevant links of the Docker support from Ranger team are the following:
-* https://github.com/apache/ranger/tree/master/dev-support/ranger-docker
+The most relevant links of the Docker support from Ranger team is the following:
 * https://cwiki.apache.org/confluence/display/RANGER/Running+Apache+Ranger+-++%5BFrom+source%5D+in+minutes
 
 
