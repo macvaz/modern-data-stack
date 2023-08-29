@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./docker/trino/etc:/etc/trino:ro
+      - ./docker/trino/conf:/etc/trino:ro
     networks:
       - data-stack
 
@@ -35,7 +35,7 @@ services:
     ports:
       - 9083:9083 # Metastore Thrift
     volumes:
-      - ./docker/hive-metastore/metastore-site.xml:/opt/apache-hive-metastore-3.1.3-bin/conf/metastore-site.xml:ro
+      - ./docker/hive-metastore/conf/metastore-site.xml:/opt/apache-hive-metastore-3.1.3-bin/conf/metastore-site.xml:ro
     ulimits:
       nofile:
         soft: 65536
