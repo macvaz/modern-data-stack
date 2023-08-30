@@ -6,13 +6,14 @@ Minimal example integrating docker images of the following Big Data open-source 
   - Trino: v425
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
+  - Apache Spark: v3.3.1
+  - DBT: v1.0.0
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
 ```bash
   - OpenMetadata (data catalog)
-  - dbt (data transformation)
   - Apache Ranger (data security)
 ```
 ## Installation
@@ -106,7 +107,9 @@ select * from minio.sales.sales;
 
 ## Using Spark
 
+```bash
 docker run -it etl-tools spark-shell
+``````
 
 ## Compatibility issues
 
