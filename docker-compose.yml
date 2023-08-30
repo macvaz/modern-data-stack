@@ -73,6 +73,7 @@ services:
     build: docker/etl-tools
     hostname: etl-tools
     container_name: etl-tools
+    image: etl-tools:latest
     environment:
       - AWS_ACCESS_KEY_ID=minio
       - AWS_SECRET_ACCESS_KEY=minio123
@@ -89,8 +90,6 @@ services:
       - 18080:18080 # Spark history web ui port
     networks:
       - data-stack
-    command: 
-      - spark-shell
     depends_on:
       minio:
         condition: service_healthy
