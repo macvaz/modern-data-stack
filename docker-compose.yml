@@ -74,14 +74,7 @@ services:
     hostname: etl-tools
     container_name: etl-tools
     image: etl-tools:latest
-    environment:
-      - AWS_ACCESS_KEY_ID=minio
-      - AWS_SECRET_ACCESS_KEY=minio123
-      - AWS_REGION=us-east-1
     volumes:
-      - ./data/html:/var/lib/html
-      - ./data/stage:/var/lib/stage
-      - ./data/spark/notebooks:/var/lib/notebooks
       - ./projects/dbt:/var/lib/dbt
     ports:
       - 7077:7077   # Spark port
