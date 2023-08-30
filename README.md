@@ -69,14 +69,7 @@ s3cmd la
 
 ## Using Trino
 
-Download trino cli with:
-
-```bash
-wget https://repo1.maven.org/maven2/io/trino/trino-cli/425/trino-cli-425-executable.jar -O trino
-chmod +x trino
-```
-
-Or use trino client installed in the trino container:
+trino client is installed in the trino container:
 ```bash
 docker-compose run trino trino
 ```
