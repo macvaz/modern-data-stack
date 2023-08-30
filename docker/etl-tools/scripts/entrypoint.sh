@@ -8,7 +8,7 @@ start-master.sh -p 7077 --webui-port 8061
 start-worker.sh spark://spark:7077 --webui-port 8062
 start-history-server.sh
 
-# Entrypoint, for example notebook, pyspark or spark-sql
+# Entrypoint, for example spark-shell, spark-sql
 if [[ $# -gt 0 ]] ; then
     eval "$1"
 fi

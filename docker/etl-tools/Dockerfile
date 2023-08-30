@@ -2,7 +2,6 @@
   FROM python:3.9-bullseye
 
   ENV SPARK_HOME=/opt/spark
-  ENV KYUUBI_HOME=/opt/kyuubi
   ENV BIN_DIR=/usr/bin
 
   ENV DBT_DIR=/var/lib/dbt
@@ -13,7 +12,7 @@
   ENV PATH="/opt/spark/sbin:/opt/spark/bin:${PATH}"
   ENV INSTALL_DIR=/tmp/install
 
-  RUN mkdir -p ${SPARK_HOME} ${KYUUBI_HOME} ${DBT_DIR} ${DATA_STAGE_DIR} ${INSTALL_DIR} 
+  RUN mkdir -p ${SPARK_HOME} ${DBT_DIR} ${DATA_STAGE_DIR} ${INSTALL_DIR} 
 
   # install core packages 
   RUN apt-get update && apt-get upgrade -y && \
@@ -65,16 +64,12 @@
 
   COPY conf/spark-defaults.conf ${SPARK_HOME}/conf
   COPY scripts/entrypoint.sh ${BIN_DIR}
+  
+  RUN chmod +x ${SPARK_HOME}/* && chmod +x ${SPARK_HOME}/bin/* &&  chmod +x ${BIN_DIR}/entrypoint.sh
 
-  RUN chmod u+x ${SPARK_HOME}/* && chmod u+x ${SPARK_HOME}/bin/* 
-
-  EXPOSE 3070
-  EXPOSE 8888
   EXPOSE 7077
   EXPOSE 8061
   EXPOSE 8062
-  EXPOSE 10000
-  EXPOSE 10009
   EXPOSE 18080
 
   ENTRYPOINT ["/usr/bin/entrypoint.sh"]
