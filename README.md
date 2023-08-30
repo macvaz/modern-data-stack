@@ -35,7 +35,7 @@ Start all docker containers with:
 docker-compose up -d
 ```
 
-Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. Since this repo is for teaching purposes, *it's recommended to create the same keys in order to avoid changing the configuration files*.
+Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. Since this repo is for teaching purposes, **it's recommended to create the same keys in order to avoid changing the configuration files**.
 
 The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a one-off VM**. I decided to hardcode them in order to keep things simple for the reader. 
 
