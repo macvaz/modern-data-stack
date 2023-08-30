@@ -71,7 +71,7 @@ s3cmd la
 
 trino client is installed in the trino container:
 ```bash
-docker-compose run trino trino
+docker-compose exec trino trino
 ```
 
 Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This Big Data table (**minio.sales.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
