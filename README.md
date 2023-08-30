@@ -3,11 +3,11 @@
 Minimal example integrating docker images of the following Big Data open-source projects:
 
 ```bash
-  - Trino: v425
+  - trino: v425
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
   - Apache Spark: v3.3.1
-  - DBT: v1.0.0
+  - dbt: v1.6.0
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -72,14 +72,13 @@ s3cmd la
 Download trino cli with:
 
 ```bash
-wget https://repo1.maven.org/maven2/io/trino/trino-cli/425/trino-cli-425-executable.jar \
-  -O trino
+wget https://repo1.maven.org/maven2/io/trino/trino-cli/425/trino-cli-425-executable.jar -O trino
 chmod +x trino
 ```
 
 Or use trino client installed in the trino container:
 ```bash
-docker exec -it trino trino
+docker-compose run trino trino
 ```
 
 Using trino with the **minio catalog** stores all metadata in Hive MetaStore (HMS) data catalog. This Big Data table (**minio.sales.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
@@ -108,8 +107,14 @@ select * from minio.sales.sales;
 ## Using Spark
 
 ```bash
-docker run -it etl-tools spark-shell
-``````
+docker-compose run etl-tools spark-shell
+```
+
+## Using dbt
+
+```bash
+docker-compose run etl-tools dbt <command>
+```
 
 ## Compatibility issues
 

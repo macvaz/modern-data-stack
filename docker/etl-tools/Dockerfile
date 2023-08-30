@@ -37,8 +37,9 @@
 
   WORKDIR ${INSTALL_DIR}
 
-  # Install python deps (dbt included)
+  # Installing dbt
   COPY requirements.txt .
+
   RUN pip3 install --no-cache-dir -r requirements.txt && rm requirements.txt \
   # Download spark distribution and install it
     && curl https://archive.apache.org/dist/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz -o spark-3.3.1-bin-hadoop3.tgz \
