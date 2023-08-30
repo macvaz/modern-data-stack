@@ -100,13 +100,13 @@ select * from minio.sales.sales;
 ## Using Spark
 
 ```bash
-docker-compose run etl-tools spark-shell
+docker-compose run batch spark-shell
 ```
 
 ## Using dbt
 
 ```bash
-docker-compose run etl-tools dbt <command>
+docker-compose run batch dbt <command>
 ```
 
 ## Compatibility issues

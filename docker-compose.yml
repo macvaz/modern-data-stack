@@ -69,11 +69,11 @@ services:
       timeout: 5s
       retries: 5
   
-  etl-tools:
-    build: docker/etl-tools
-    hostname: etl-tools
-    container_name: etl-tools
-    image: etl-tools:latest
+  batch:
+    build: docker/batch
+    hostname: batch
+    container_name: batch
+    image: batch:latest
     volumes:
       - ./projects/dbt:/var/lib/dbt
     ports:
