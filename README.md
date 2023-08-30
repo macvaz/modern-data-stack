@@ -104,6 +104,10 @@ WITH (
 select * from minio.sales.sales;
 ```
 
+## Using Spark
+
+docker run -it etl-tools spark-shell
+
 ## Compatibility issues
 
 ### Apache Hive MetaStore

@@ -1,27 +1,18 @@
   # syntax=docker/dockerfile:1
   FROM python:3.9-bullseye
 
-  ENV METASTORE_HADOOP_VERSION=3.2.0
-  ENV METASTORE_VERSION=3.0.0
   ENV SPARK_HOME=/opt/spark
-  ENV DAGSTER_HOME=/opt/dagster
-  ENV KYUUBI_HOME=/opt/kyuubi
   ENV BIN_DIR=/usr/bin
 
-  ENV DAGSTER_DIR=/var/lib/ngods/dagster
-  ENV DBT_DIR=/var/lib/ngods/dbt
-  ENV NOTEBOOKS_DIR=/var/lib/ngods/notebooks
-  ENV DATA_STAGE_DIR=/var/lib/ngods/stage
-  ENV HTML_DIR=/var/lib/ngods/html
+  ENV DBT_DIR=/var/lib/dbt
+  ENV DATA_STAGE_DIR=/var/lib/stage
 
   # Add iceberg spark runtime jar to IJava classpath
   ENV IJAVA_CLASSPATH=/opt/spark/jars/*
   ENV PATH="/opt/spark/sbin:/opt/spark/bin:${PATH}"
   ENV INSTALL_DIR=/tmp/install
 
-  RUN mkdir -p ${SPARK_HOME} ${MINIO_HOME}/bin ${DAGSTER_HOME}  ${KYUUBI_HOME} \ 
-              ${DAGSTER_DIR} ${DBT_DIR} ${DATA_STAGE_DIR} ${NOTEBOOKS_DIR} ${INSTALL_DIR} ${HTML_DIR} \
-              /root/.ipython/profile_default/startup
+  RUN mkdir -p ${SPARK_HOME} ${DBT_DIR} ${DATA_STAGE_DIR} ${INSTALL_DIR} 
 
   # install core packages 
   RUN apt-get update && apt-get upgrade -y && \
@@ -46,16 +37,9 @@
 
   WORKDIR ${INSTALL_DIR}
 
-  # Install python deps
-  COPY conf/requirements.txt .
-  RUN pip3 install --no-cache-dir -r requirements.txt \
-      && rm requirements.txt
-
-  # Download and install IJava jupyter kernel
-  RUN curl https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip -Lo ijava-1.3.0.zip \
-    && unzip ijava-1.3.0.zip \
-    && python3 install.py --sys-prefix \
-    && rm -rf ijava-1.3.0.zip	install.py java \
+  # Install python deps (dbt included)
+  COPY requirements.txt .
+  RUN pip3 install --no-cache-dir -r requirements.txt && rm requirements.txt \
   # Download spark distribution and install it
     && curl https://archive.apache.org/dist/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz -o spark-3.3.1-bin-hadoop3.tgz \
       && tar xvzf spark-3.3.1-bin-hadoop3.tgz --directory /opt/spark --strip-components 1 \
@@ -74,38 +58,18 @@
       && unzip awscliv2.zip \
       && sudo ./aws/install \
       && rm awscliv2.zip \
-      && rm -rf aws/ \
-  # Download and install Kyuubi JDBC
-    && curl https://archive.apache.org/dist/incubator/kyuubi/kyuubi-1.6.1-incubating/apache-kyuubi-1.6.1-incubating-bin.tgz -Lo kyuubi.tgz \ 
-      && tar xvzf kyuubi.tgz --directory ${KYUUBI_HOME} --strip-components 1 \
-      && rm kyuubi.tgz \
-  # Download and install Postgres deiver for Hive metastore
-    && curl https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.3/postgresql-42.5.3.jar -Lo pgsql.jar \ 
-      && mv pgsql.jar /opt/spark/jars 
+      && rm -rf aws/
 
   WORKDIR ${SPARK_HOME}
 
   COPY conf/spark-defaults.conf ${SPARK_HOME}/conf
-  COPY conf/dagster.yaml ${DAGSTER_HOME}
   COPY scripts/entrypoint.sh ${BIN_DIR}
-  COPY conf/ipython/startup/00-prettytables.py /root/.ipython/profile_default/startup
-  COPY conf/ipython/startup/README /root/.ipython/profile_default/startup
-  COPY conf/notebook ${BIN_DIR}/notebook
-  COPY conf/notebook ${BIN_DIR}/pyspark-notebook
+  
+  RUN chmod +x ${SPARK_HOME}/* && chmod +x ${SPARK_HOME}/bin/* &&  chmod +x ${BIN_DIR}/entrypoint.sh
 
-  RUN chmod u+x ${SPARK_HOME}/* \
-    && chmod u+x ${SPARK_HOME}/bin/* \
-    && chmod u+x ${BIN_DIR}/notebook \
-    && chmod u+x ${BIN_DIR}/pyspark-notebook
-
-  EXPOSE 3070
-  EXPOSE 8888
   EXPOSE 7077
   EXPOSE 8061
   EXPOSE 8062
-  EXPOSE 10000
-  EXPOSE 10009
   EXPOSE 18080
 
   ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-  CMD ["notebook"]
