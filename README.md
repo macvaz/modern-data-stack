@@ -99,9 +99,12 @@ select * from minio.sales.sales;
 
 ## Using Spark via jupyter notebooks
 
-https://tabular.io/blog/docker-spark-and-iceberg/
-https://blog.min.io/manage-iceberg-tables-with-spark/
-https://blog.min.io/iceberg-acid-transactions/
+Import links:
+
+* https://iceberg.apache.org/spark-quickstart/
+* https://tabular.io/blog/docker-spark-and-iceberg/
+* https://blog.min.io/manage-iceberg-tables-with-spark/
+* https://blog.min.io/iceberg-acid-transactions/
 
 Connect to jupyter notebook web site: http://localhost:8000/tree
 
