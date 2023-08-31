@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS minio.sales.sales (
 WITH (
   external_location = 's3a://minio-dlk/sales/',
   format = 'PARQUET'
-)
+);
