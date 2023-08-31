@@ -6,8 +6,8 @@ Minimal example integrating docker images of the following Big Data open-source 
   - trino: v425
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
-  - Apache Spark: v3.3.1
-  - dbt: v1.6.0
+  - Apache Spark: v3.4.1
+  - Jupyter notebooks: v1.0.0 (+ iJava kernel)
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -97,17 +97,13 @@ WITH (
 select * from minio.sales.sales;
 ```
 
-## Using Spark
+## Using Spark via jupyter notebooks
 
-```bash
-docker-compose run batch spark-shell
-```
+https://tabular.io/blog/docker-spark-and-iceberg/
+https://blog.min.io/manage-iceberg-tables-with-spark/
+https://blog.min.io/iceberg-acid-transactions/
 
-## Using dbt
-
-```bash
-docker-compose run batch dbt <command>
-```
+Connect to jupyter notebook web site: http://localhost:8000/tree
 
 ## Compatibility issues
 
@@ -117,3 +113,7 @@ docker-compose run batch dbt <command>
  * Both alpha v4 and beta v4 prereleases work perfectly well but Trino v425 is only compatible with [Hive Metastore Thrift API v3.1](https://github.com/trinodb/trino/blob/39af728fa5e474d5537ede364f7599c941541f2f/pom.xml#L1393). In real life usage, this produces some incompatibility errors when using trino that can be easily reproduced using [hive4 branch](https://github.com/macvaz/modern_data_stack/tree/hive4) of this repo.
 
  * [Official Hive 3.1.3 docker image](https://hub.docker.com/layers/apache/hive/3.1.3/images/sha256-d3d2b8dff7c223b4a024a0393e5c89b1d6cb413e91d740526aebf4e6ecd8f75e?context=explore) does not start, showing database initializacions errors. Consecuently, I wrote the Dockerfile for installing HMS 3.1.3.
+
+### Apache Iceberg
+
+Is compatible with [several metastore catalogs](https://iceberg.apache.org/concepts/catalog/) apart from Hive Metastore like REST Catalog and JDBC Catalog. However [trino does not have full suport](https://trino.io/docs/current/connector/metastores.html) for them, making imposible to crate views and materialized views with REST Catalog and JDBC Catalog. Consequently, modern-data-stack is still based on Hive MetaStore (HMS) until this limitations are overcame.
