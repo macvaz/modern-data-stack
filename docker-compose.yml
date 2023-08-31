@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
   trino:
     hostname: trino
@@ -63,37 +64,48 @@ services:
     command: server --console-address ":9001" /data
     networks:
       - data-stack
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
   
-  batch:
-    build: docker/batch
-    hostname: batch
-    container_name: batch
-    image: batch:latest
-    volumes:
-      - ./projects/dbt:/var/lib/dbt
+#  rest:
+#    image: tabulario/iceberg-rest
+#    container_name: iceberg-rest
+#    ports:
+#      - 8181:8181
+#    environment:
+#      - AWS_ACCESS_KEY_ID=admin
+#      - AWS_SECRET_ACCESS_KEY=password
+#      - AWS_REGION=us-east-1
+#      - CATALOG_WAREHOUSE=s3://warehouse/
+#      - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
+#      - CATALOG_S3_ENDPOINT=http://minio:9000
+#    networks:
+#      - data-stack
+
+  spark:
+    hostname: spark
+    container_name: spark
+    image: tabulario/spark-iceberg #official spark+iceberg docker image
     ports:
-      - 7077:7077   # Spark port
-      - 8061:8061   # Spark master web ui port
-      - 8062:8062   # Spark worker web ui port
-      - 18080:18080 # Spark history web ui port
+      - 7077:8080 # Web UI Spark master
+      - 8000:8888 # Web UI Jupyter notebook
+      - 10000:10000
+      - 10001:10001
+    volumes:
+      - spark-warehouse-data:/home/iceberg/warehouse
+      - spark-notebooks-data:/home/iceberg/notebooks/notebooks
     networks:
       - data-stack
-    depends_on:
-      minio:
-        condition: service_healthy
-    deploy:
-      replicas: 0 #No need to start batch container when booting up docker compose
 
 volumes:
   minio-data:
     driver: local
   
   mariadb-data:
+    driver: local
+  
+  spark-warehouse-data:
+    driver: local
+  
+  spark-notebooks-data:
     driver: local
 
 networks:
