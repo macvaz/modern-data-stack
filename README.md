@@ -73,7 +73,7 @@ ls -al /home/iceberg/spark-events/*
 
 Once installation is properly set up, using jupyter notebooks is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. 
 
-Connect using a web browser to **[this notebook]**(http://localhost:8000/notebooks/notebooks%2FTesting%20Iceberg.ipynb).
+Connect using a web browser to **[this notebook](http://localhost:8000/notebooks/notebooks%2FTesting%20Iceberg.ipynb)**.
 
 Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
 
