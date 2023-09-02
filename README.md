@@ -7,7 +7,8 @@ Minimal example integrating docker images of the following Big Data open-source 
   - MinIO: v2023.08.23
   - HMS (Hive MetaStore): v3.1.3
   - Apache Spark: v3.4.1
-  - Jupyter notebooks: v1.0.0 (+ iJava kernel)
+  - Apache Iceberg: v1.6
+  - Jupyter notebooks: v1.0.0 (with iJava and Python kernels)
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -17,17 +18,6 @@ Since the open-source big data ecosystem is vibrant, this **modern-data-stack is
   - Apache Ranger (data security)
 ```
 ## Installation
-
-Install [s3cmd](https://s3tools.org/s3cmd) with:
-
-```bash
-sudo apt update
-sudo apt install -y \
-    s3cmd \
-    openjdk-11-jre-headless  # Needed for trino-cli
-```
-
-All the components are distributed as **docker containers**, joint together in a [docker-compose file](docker-compose.yml). The compose is mostly self-explanatory. Some additional configuration files for both HMS and trino are also included in this repo.
 
 Start all docker containers with:
 
@@ -39,33 +29,24 @@ Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PA
 
 The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a one-off VM**. I decided to hardcode them in order to keep things simple for the reader. 
 
-Configure `s3cmd` by creating file ~/.s3cfg:
+Create the buckets in the MinIO server:
 
 ```bash
-# Setup endpoint
-host_base = localhost:9000
-host_bucket = localhost:9000
-use_https = False
-
-# Setup access keys
-access_key = cTI5BM9ecjv6qISgGaHP
-secret_key = gJslk7jC1IJqOpDAVoV0fPXFS0WKDcSX9zBGd3f1
-
-# Enable S3 v4 signature APIs
-signature_v2 = False
+docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
 
-To create a bucket called `minio-dlk` and upload data to minio, type:
+## Using Spark
 
 ```bash
-s3cmd mb s3://minio-dlk
-s3cmd put data/sales_summary.parquet s3://minio-dlk/sales/sales_summary.parquet
+docker-compose exec spark spark-shell #Scala shell
+docker-compose exec spark pyspark #Python shell
 ```
-To list all object in all buckets, type:
 
-```bash
-s3cmd la
-```
+## Using Jupyter notebooks
+
+Connect using a web browser to: http://localhost:8000/tree
+
+There is only kernels for python, so pyspark is the prefered way to use spark.
 
 ## Using Trino
 
@@ -96,17 +77,6 @@ WITH (
 
 select * from minio.sales.sales;
 ```
-
-## Using Spark via jupyter notebooks
-
-Import links:
-
-* https://iceberg.apache.org/spark-quickstart/
-* https://tabular.io/blog/docker-spark-and-iceberg/
-* https://blog.min.io/manage-iceberg-tables-with-spark/
-* https://blog.min.io/iceberg-acid-transactions/
-
-Connect to jupyter notebook web site: http://localhost:8000/tree
 
 ## Compatibility issues
 

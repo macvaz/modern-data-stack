@@ -8,7 +8,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./docker/trino/conf:/etc/trino:ro
+      - ./docker/trinodb/conf:/etc/trino:ro
     networks:
       - data-stack
 
@@ -57,28 +57,33 @@ services:
       - 9000:9000
       - 9001:9001
     volumes:
+      - ./docker/minio/scripts/init_datalake.sh:/opt/bin/init_datalake.sh
       - minio-data:/data
     environment:
-      MINIO_ROOT_USER:  $MINIO_USER
+      MINIO_ROOT_USER: $MINIO_USER
       MINIO_ROOT_PASSWORD: $MINIO_USER_PASSWORD
+      MINIO_DOMAIN: minio #Required by AWS S3 SDK
     command: server --console-address ":9001" /data
     networks:
-      - data-stack
+      data-stack:
+        aliases:
+          - warehouse.minio #Required by AWS S3 SDK
   
-#  rest:
-#    image: tabulario/iceberg-rest
-#    container_name: iceberg-rest
-#    ports:
-#      - 8181:8181
-#    environment:
-#      - AWS_ACCESS_KEY_ID=admin
-#      - AWS_SECRET_ACCESS_KEY=password
-#      - AWS_REGION=us-east-1
-#      - CATALOG_WAREHOUSE=s3://warehouse/
-#      - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
-#      - CATALOG_S3_ENDPOINT=http://minio:9000
-#    networks:
-#      - data-stack
+  rest-catalog: #REST catalog
+    container_name: rest
+    hostname: rest
+    image: tabulario/iceberg-rest
+    ports:
+      - 8181:8181
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_REGION=$AWS_REGION
+      - CATALOG_WAREHOUSE=s3://warehouse
+      - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
+      - CATALOG_S3_ENDPOINT=http://minio:9000
+    networks:
+      - data-stack
 
   spark:
     hostname: spark
@@ -90,8 +95,13 @@ services:
       - 10000:10000
       - 10001:10001
     volumes:
+      #- ./docker/spark-iceberg/conf/spark-defaults.rest.conf:/opt/spark/conf/spark-defaults.conf:ro
       - spark-warehouse-data:/home/iceberg/warehouse
       - spark-notebooks-data:/home/iceberg/notebooks/notebooks
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_REGION=$AWS_REGION
     networks:
       - data-stack
 
