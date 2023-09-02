@@ -8,7 +8,7 @@ Minimal example integrating docker images of the following Big Data open-source 
   - HMS (Hive MetaStore): v3.1.3
   - Apache Spark: v3.4.1
   - Apache Iceberg: v1.6
-  - Jupyter notebooks: v1.0.0 (with iJava and Python kernels)
+  - Jupyter notebooks: v1.0.0 (with Python kernels)
 ```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
@@ -27,28 +27,24 @@ docker-compose up -d
 
 Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. Since this repo is for teaching purposes, **it's recommended to create the same keys in MinIO to avoid changing the configuration files**.
 
-The basic autentication scheme in MinIO for buckets is based on S3 access tokens. Exploring other authentication methods is out of scope of this repo. **The keys used in this repo are disposable, created adhoc in a one-off VM**. I decided to hardcode them in order to keep things simple for the reader. 
-
 Create the buckets in the MinIO server:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
 
-## Using Spark with Iceberg
+### Testing Spark + Iceberg installation
 
-To open a Scala or Python spark shell, just run:
+Since all Spark source base runs on JVM platform, using spark-shell (instead of pyspark) is recommended for troubleshooting installation errors. This avoid confusing wrapped Python-style errors of JVM components.  
+
+To start a scala-bases spark shell, just type:
 
 ```bash
-#Scala shell
 docker-compose exec spark spark-shell 
-#Python shell
-docker-compose exec spark pyspark
 ```
 
-Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
+Just paste this code in the shell in order to test the connection between Spark and iceberg REST metastore:
 
-Using the Scala API, a simple example that creates a table (demo.nyc.taxis) in the Iceberg catalog, can be found here:
 
 ```scala
 import org.apache.spark.sql.types._
@@ -63,15 +59,33 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("demo.nyc.taxis").create()
+df.writeTo("iceberg.nyc.taxis").create()
 ```
 
+For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
+
+```bash
+docker-compose exec spark bash
+ls -al /home/iceberg/spark-events/*
+```
 
 ## Using Jupyter notebooks
 
-Connect using a web browser to: http://localhost:8000/tree
+Once installation is properly set up, using jupyter notebooks is much more covenient than CLI tools. Connect using a web browser to [this notebook](http://localhost:8000/notebooks/notebooks%2FTesting%20Iceberg.ipynb)
 
-There is only kernels for python, so pyspark is the prefered way to use spark.
+Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
+
+Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. Next, a simple example that creates a table (demo.nyc.taxis) in the Iceberg catalog, is presented and can be used to test the installation:
+
+The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. Changes This file sets Iceberg as default table format for this catalog. It alse sets Icebert REST catalog as metastore for the catalog.
+
+If everything is properly setup, a new namespace (a.k.a database) called `nyc` will be created in the Iceberg REST catalog. This namespace contains also a table called `taxis`. This table is created using `iceberg` table format since `demo` catalog is configured to use `iceberg`` by default.
+
+The REST catalog exposed a REST API than can also be invoked to retrieve the metastore status:
+* http://localhost:8181/v1/namespaces
+* http://localhost:8181/v1/namespaces/nyc
+* http://localhost:8181/v1/namespaces/nyc/tables
+
 
 ## Using Trino
 
