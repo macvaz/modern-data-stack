@@ -73,7 +73,7 @@ ls -al /home/iceberg/spark-events/*
 
 Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. 
 
-To connect to the jupyter notebook environment, just connect to the url `http://localhost:8000/tree/notebooks`. Open the notebook called "Testing Iceberg".
+To connect to the jupyter notebook environment, just connect to the url **http://localhost:8000/tree/notebooks**. Open the notebook called "Testing Iceberg".
 
 Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
 
