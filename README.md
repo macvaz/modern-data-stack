@@ -72,7 +72,7 @@ ls -al /home/iceberg/spark-events/*
 
 Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. 
 
-Open the notebook called [Testing Iceberg](http://localhost:8000/notebooks/notebooks/Testing%20Iceberg.ipynb).Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). 
+**Open the notebook** called [Testing Iceberg](http://localhost:8000/notebooks/notebooks/Testing%20Iceberg.ipynb).Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). 
 
 The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. Changes This file sets Iceberg as default table format for this catalog. It alse sets Icebert REST catalog as metastore for the catalog.
 
