@@ -37,8 +37,6 @@ docker-compose exec minio bash /opt/bin/init_datalake.sh
 
 ## Using Spark with Iceberg
 
-Iceberg project mantains a very good [quick start guide] (https://iceberg.apache.org/spark-quickstart/#creating-a-table)
-
 To open a Scala or Python spark shell, just run:
 
 ```bash
@@ -48,7 +46,9 @@ docker-compose exec spark spark-shell
 docker-compose exec spark pyspark
 ```
 
-One simple test, using Scala API, that creates a table in the Iceberg catalog, can be found here:
+Iceberg project mantains a very good (quick start guide) [https://iceberg.apache.org/spark-quickstart/#creating-a-table]. Next examples are based on the official documentation of the project.
+
+Using the Scala API, a simple example that creates a table (demo.nyc.taxis) in the Iceberg catalog, can be found here:
 
 ```scala
 import org.apache.spark.sql.types._
