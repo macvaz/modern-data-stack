@@ -73,13 +73,11 @@ ls -al /home/iceberg/spark-events/*
 
 Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. 
 
-To connect to the jupyter notebook environment, just connect to the url **http://localhost:8000/tree/notebooks**. Open the notebook called "Testing Iceberg".
-
-Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
+To connect to the jupyter notebook environment, just connect to the url **http://localhost:8000/tree/notebooks**. Open the notebook called **"Testing Iceberg"**.Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
 
 The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. Changes This file sets Iceberg as default table format for this catalog. It alse sets Icebert REST catalog as metastore for the catalog.
 
-If everything is properly setup, a new namespace (a.k.a database) called `nyc` will be created in the Iceberg REST catalog. This namespace contains also a table called `taxis`. This table is created using `iceberg` table format since `demo` catalog is configured to use `iceberg`` by default.
+If everything is properly setup, a new namespace (a.k.a database) called `nyc` will be created in the Iceberg REST catalog. This namespace contains also a table called `taxis`. This table is created using iceberg table format since `iceberg` catalog is configured to use `iceberg` by default.
 
 The REST catalog exposed a REST API than can also be invoked to retrieve the metastore status:
 * http://localhost:8181/v1/namespaces
