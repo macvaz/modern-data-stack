@@ -46,7 +46,7 @@ docker-compose exec spark spark-shell
 docker-compose exec spark pyspark
 ```
 
-Iceberg project mantains a very good (quick start guide) [https://iceberg.apache.org/spark-quickstart/#creating-a-table]. Next examples are based on the official documentation of the project.
+Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
 
 Using the Scala API, a simple example that creates a table (demo.nyc.taxis) in the Iceberg catalog, can be found here:
 
