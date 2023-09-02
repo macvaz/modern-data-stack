@@ -71,11 +71,11 @@ ls -al /home/iceberg/spark-events/*
 
 ## Using Jupyter notebooks
 
-Once installation is properly set up, using jupyter notebooks is much more covenient than CLI tools. Connect using a web browser to [this notebook](http://localhost:8000/notebooks/notebooks%2FTesting%20Iceberg.ipynb)
+Once installation is properly set up, using jupyter notebooks is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. 
+
+Connect using a web browser to **[this notebook]**(http://localhost:8000/notebooks/notebooks%2FTesting%20Iceberg.ipynb).
 
 Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table). Next examples are based on the official documentation of the project.
-
-Since python kernel is distributed in the spark-iceberg docker image, all coding examples are developed in python. Next, a simple example that creates a table (demo.nyc.taxis) in the Iceberg catalog, is presented and can be used to test the installation:
 
 The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. Changes This file sets Iceberg as default table format for this catalog. It alse sets Icebert REST catalog as metastore for the catalog.
 
