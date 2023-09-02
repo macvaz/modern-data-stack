@@ -35,12 +35,37 @@ Create the buckets in the MinIO server:
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
 
-## Using Spark
+## Using Spark with Iceberg
+
+Iceberg project mantains a very good [quick start guide] (https://iceberg.apache.org/spark-quickstart/#creating-a-table)
+
+To open a Scala or Python spark shell, just run:
 
 ```bash
-docker-compose exec spark spark-shell #Scala shell
-docker-compose exec spark pyspark #Python shell
+#Scala shell
+docker-compose exec spark spark-shell 
+#Python shell
+docker-compose exec spark pyspark
 ```
+
+One simple test, using Scala API, that creates a table in the Iceberg catalog, can be found here:
+
+```scala
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.Row
+
+val schema = StructType( Array(
+    StructField("vendor_id", LongType,true),
+    StructField("trip_id", LongType,true),
+    StructField("trip_distance", FloatType,true),
+    StructField("fare_amount", DoubleType,true),
+    StructField("store_and_fwd_flag", StringType,true)
+))
+
+val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
+df.writeTo("demo.nyc.taxis").create()
+```
+
 
 ## Using Jupyter notebooks
 
