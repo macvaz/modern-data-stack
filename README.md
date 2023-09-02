@@ -23,7 +23,9 @@ Start all docker containers with:
 docker-compose up -d
 ```
 
-Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. Since this repo is for teaching purposes, **it's recommended to create the same keys in MinIO to avoid changing the configuration files**.
+Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. 
+
+Since this repo is for teaching purposes, **it's recommended to create the same keys in MinIO to avoid changing the configuration files**.
 
 Create the buckets in the MinIO server:
 
@@ -35,14 +37,13 @@ docker-compose exec minio bash /opt/bin/init_datalake.sh
 
 Since all Spark source base runs on JVM platform, using spark-shell (instead of pyspark) is recommended for troubleshooting installation errors. This avoid confusing wrapped Python-style errors of JVM components.  
 
-To start a scala-bases spark shell, just type:
+To test the installation, just start a scala-based spark shell, just type:
 
 ```bash
 docker-compose exec spark spark-shell 
 ```
 
-Just paste this code in the shell in order to test the connection between Spark and iceberg REST metastore:
-
+Just past this code in the shell in order to test the connection between Spark and iceberg REST metastore:
 
 ```scala
 import org.apache.spark.sql.types._

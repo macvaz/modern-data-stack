@@ -2,4 +2,3 @@ mc config host add minio http://${MINIO_DOMAIN:-minio}:9000 ${MINIO_USER:-admin}
 
 mc rm -r --force minio/warehouse;
 mc mb minio/warehouse;
-mc anonymous set public minio/warehouse;
