@@ -33,7 +33,7 @@ Create the buckets in the MinIO server:
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
 
-### Testing Spark + Iceberg installation
+### Testing installation
 
 Since all Spark source base runs on JVM platform, using spark-shell (instead of pyspark) is recommended for troubleshooting installation errors. This avoid confusing wrapped Python-style errors of JVM components.  
 
@@ -58,10 +58,10 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("iceberg.nyc.taxis").create()
+df.writeTo("iceberg.nyc.test").create()
 ```
 
-For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
+No errors should be raised. For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
 
 ```bash
 docker-compose exec spark bash
