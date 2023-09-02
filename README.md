@@ -8,14 +8,11 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **Apache Spark**: v3.4.1
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree/notebooks
-```
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
-```bash
-  - OpenMetadata (data catalog)
-  - Apache Ranger (data security)
-```
+- **OpenMetadata** (data catalog)
+- **Apache Ranger** (data security)
 
 
 ## Installation
