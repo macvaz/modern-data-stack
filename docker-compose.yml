@@ -85,14 +85,14 @@ services:
       - 10000:10000
       - 10001:10001
     volumes:
-      - ./docker/spark-iceberg/conf/spark-defaults.hms.conf:/opt/spark/conf/spark-defaults.conf:ro #rewriting spark defaults
+      - ./docker/spark-iceberg/conf/spark-defaults.iceberg.hms.conf:/opt/spark/conf/spark-defaults.conf:ro #rewriting spark defaults
       - spark-warehouse-data:/home/iceberg/warehouse
       - ./data/notebooks:/home/iceberg/notebooks
       - ./lib/aws-java-sdk-bundle-1.12.219.jar:/opt/spark/jars/aws-java-sdk-bundle-1.12.219.jar
       - ./lib/hadoop-aws-3.3.4.jar:/opt/spark/jars/hadoop-aws-3.3.4.jar
     environment:
-      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID #Used by REST catalog directly
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY #Used by REST catalog directly
       AWS_REGION: $AWS_REGION
     networks:
       - data-stack

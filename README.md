@@ -136,3 +136,6 @@ Additionally, since trino does not allow to redefine the S3 endpoint when using 
 * https://tabular.io/blog/iceberg-fileio/?ref=blog.min.io
 * https://tabular.io/guides-and-papers/
 * https://www.datamesh-architecture.com/tech-stacks/minio-trino
+* https://dev.to/alexmercedcoder/configuring-apache-spark-for-apache-iceberg-2d41
+* https://iceberg.apache.org/docs/latest/configuration/#catalog-properties
+
