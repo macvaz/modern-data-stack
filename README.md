@@ -35,6 +35,7 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
+bash libs/download_s3_jars.sh
 ```
 ### Testing installation
 
@@ -61,7 +62,7 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("iceberg.nyc.test").create()
+df.writeTo("nyc.test").create()
 ```
 
 No errors should be raised. For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
@@ -96,9 +97,9 @@ docker-compose exec trino trino
 Using trino with the **iceberg catalog** stores all metadata in Iceberg TEST data catalog. This Big Data table (**iceberg.nyc.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS iceberg.nyc WITH (location = 's3a://warehouse/nyc');
+CREATE SCHEMA IF NOT EXISTS minio.nyc WITH (location = 's3a://warehouse/nyc');
 
-CREATE TABLE IF NOT EXISTS iceberg.nyc.sales (
+CREATE TABLE IF NOT EXISTS minio.nyc.sales (
   productcategoryname VARCHAR,
   productsubcategoryname VARCHAR,
   productname VARCHAR,
@@ -108,7 +109,7 @@ CREATE TABLE IF NOT EXISTS iceberg.nyc.sales (
   orderQuantity INTEGER
 );
 
-select * from iceberg.nyc.sales;
+select * from minio.nyc.sales;
 ```
 
 ## Compatibility issues

@@ -75,6 +75,22 @@ services:
           - warehouse.minio #Required by AWS S3 SDK
         ipv4_address: 10.10.5.100
   
+  rest-catalog: #Icerberg REST catalog (each time it is restarted, state is cleaned)
+    container_name: rest
+    hostname: rest
+    image: tabulario/iceberg-rest
+    ports:
+      - 8181:8181
+    environment:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_REGION: $AWS_REGION
+      CATALOG_WAREHOUSE: s3a://warehouse
+      CATALOG_IO__IMPL: org.apache.iceberg.aws.s3.S3FileIO
+      CATALOG_S3_ENDPOINT: http://minio:9000
+    networks:
+      - data-stack
+
   spark:
     hostname: spark
     container_name: spark
@@ -85,11 +101,9 @@ services:
       - 10000:10000
       - 10001:10001
     volumes:
-      - ./docker/spark-iceberg/conf/spark-defaults.minio.conf:/opt/spark/conf/spark-defaults.conf:ro #rewriting spark defaults
+      - ./docker/spark-iceberg/conf/spark-defaults.iceberg.conf:/opt/spark/conf/spark-defaults.conf:ro #rewriting spark defaults
       - spark-warehouse-data:/home/iceberg/warehouse
-      - ./data/notebooks:/home/iceberg/notebooks/notebooks
-      - ./libs/aws-java-sdk-bundle-1.12.219.jar:/opt/spark/jars/aws-java-sdk-bundle-1.12.219.jar
-      - ./libs/hadoop-aws-3.3.4.jar:/opt/spark/jars/hadoop-aws-3.3.4.jar
+      - .data/notebooks:/home/iceberg/notebooks/notebooks
     environment:
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
