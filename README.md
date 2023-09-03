@@ -23,16 +23,15 @@ Start all docker containers with:
 docker-compose up -d
 ```
 
-Connect to `http://localhost:9000` using the `MINIO_USERNAME` and `MINIO_USER_PASSWORD` provided via `.env file`. **Create a pair of `access key` and `secret key`** in MinIO. This credentials should be added to [metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties) in order to integrate HMS, MinIO and trino. 
+### Initializing datalake
 
-Since this repo is for teaching purposes, **it's recommended to create the same keys in MinIO to avoid changing the configuration files**.
+Since this repo is for teaching purposes, a .env file is provided. The access keys are totally disposable and not used in any system. For an easy setup, it's recommended to keep that access keys to avoid changing the configuration files ([metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties)) where this keys are used. 
 
-Create the buckets in the MinIO server:
+To provision access keys and creating the bucket in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
-
 ### Testing installation
 
 Since all Spark source base runs on JVM platform, using spark-shell (instead of pyspark) is recommended for troubleshooting installation errors. This avoid confusing wrapped Python-style errors of JVM components.  

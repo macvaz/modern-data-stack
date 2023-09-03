@@ -66,6 +66,8 @@ services:
       MINIO_ROOT_USER: $MINIO_USER
       MINIO_ROOT_PASSWORD: $MINIO_USER_PASSWORD
       MINIO_DOMAIN: minio #Required by AWS S3 SDK
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID #Setting MinIO access key
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY #Setting MinIO access secret
     command: server --console-address ":9001" /data
     networks:
       data-stack:
