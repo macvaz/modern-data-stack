@@ -25,7 +25,7 @@ docker-compose up -d
 
 ### Initializing datalake
 
-Since this repo is for teaching purposes, a `.env file`` is provided. The access keys are totally disposable and not used in any system. For an easy setup, it's recommended to **keep that access keys to avoid changing the configuration files** ([metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trino/conf/catalog/minio.properties)) where this keys are used. 
+Since this repo is for teaching purposes, a `.env file`` is provided. The access keys are totally disposable and not used in any system. For an easy setup, it's recommended to **keep that access keys to avoid changing the configuration files** ([metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml) and [catalog/minio.properties](docker/trinodb/conf/catalog/minio.properties)) where this keys are used. 
 
 To provision access keys and creating the bucket in the MinIO server, just type:
 
