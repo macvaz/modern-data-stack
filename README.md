@@ -35,6 +35,7 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
+bin/download_s3_jars.sh
 ```
 ### Testing installation
 
@@ -61,7 +62,7 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("iceberg.nyc.test").create()
+df.writeTo("nyc.test").create()
 ```
 
 No errors should be raised. For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
@@ -75,16 +76,11 @@ ls -al /home/iceberg/spark-events/*
 
 Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, **all coding examples are developed in python**. 
 
-**Open the notebook** called [Testing Iceberg](http://localhost:8000/notebooks/notebooks/Testing%20Iceberg.ipynb). Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table) that complements this notebook.
+**Open the notebook** called [Testing Iceberg](http://localhost:8000/notebooks). Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table) that complements this notebook.
 
 The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. This file sets Iceberg as default table format for this catalog. It alse sets Iceberg REST catalog as metastore for the catalog.
 
 If everything is properly setup, a new namespace (a.k.a database) called `nyc` will be created in the Iceberg REST catalog. This namespace contains also a table called `taxis`. This table is created using iceberg table format since `iceberg` catalog is configured to use `iceberg` by default.
-
-The REST catalog exposed a REST API than can also be invoked to retrieve the metastore status:
-* http://localhost:8181/v1/namespaces
-* http://localhost:8181/v1/namespaces/nyc
-* http://localhost:8181/v1/namespaces/nyc/tables
 
 ## Using Trino
 
@@ -96,9 +92,10 @@ docker-compose exec trino trino
 Using trino with the **iceberg catalog** stores all metadata in Iceberg TEST data catalog. This Big Data table (**iceberg.nyc.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS iceberg.nyc WITH (location = 's3a://warehouse/nyc');
+CREATE SCHEMA IF NOT EXISTS minio_iceberg.nyc2 
+WITH (location = 's3a://warehouse/nyc2');
 
-CREATE TABLE IF NOT EXISTS iceberg.nyc.sales (
+CREATE TABLE IF NOT EXISTS minio_iceberg.nyc2.sales2 (
   productcategoryname VARCHAR,
   productsubcategoryname VARCHAR,
   productname VARCHAR,
@@ -108,7 +105,7 @@ CREATE TABLE IF NOT EXISTS iceberg.nyc.sales (
   orderQuantity INTEGER
 );
 
-select * from iceberg.nyc.sales;
+select * from minio_iceberg.nyc2.sales2;
 ```
 
 ## Compatibility issues
