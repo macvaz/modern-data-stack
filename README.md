@@ -35,7 +35,7 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
-bash libs/download_s3_jars.sh
+bin/download_s3_jars.sh
 ```
 ### Testing installation
 
