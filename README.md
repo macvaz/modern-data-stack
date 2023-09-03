@@ -125,7 +125,7 @@ Additionally, since trino does not allow to redefine the S3 endpoint when using 
 
 **Spark works perfectly well with Iceberg REST catalog** and the spark-defaults needed are is [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf). However, the **selected metastore for the modern data stack is HMS** mainly for compatibility issues (specially with trino)
 
-## Usefull links
+## Useful links
 
 * https://iceberg.apache.org/spark-quickstart/
 * https://tabular.io/blog/docker-spark-and-iceberg/
@@ -135,3 +135,4 @@ Additionally, since trino does not allow to redefine the S3 endpoint when using 
 * https://blog.min.io/lakehouse-architecture-iceberg-minio/
 * https://tabular.io/blog/iceberg-fileio/?ref=blog.min.io
 * https://tabular.io/guides-and-papers/
+* https://www.datamesh-architecture.com/tech-stacks/minio-trino
