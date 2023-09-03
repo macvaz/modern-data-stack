@@ -9,7 +9,7 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree/notebooks
 
-There are some technologies tested but finally discarted (have a look to the incompatiblities section):
+There are some technologies tested but **finally discarted** (have a look to the incompatibili  ties section):
 
 - **Iceberg REST catalog**: v.16 - not compatible with trino when warehouse is NOT in AWS S3
 
