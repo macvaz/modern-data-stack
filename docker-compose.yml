@@ -9,6 +9,9 @@ services:
       - 8080:8080
     volumes:
       - ./docker/trinodb/conf:/etc/trino:ro
+    environment:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     networks:
       - data-stack
 
@@ -68,6 +71,7 @@ services:
       data-stack:
         aliases:
           - warehouse.minio #Required by AWS S3 SDK
+        ipv4_address: 10.10.5.100
   
   rest-catalog: #Icerberg REST catalog (each time it is restarted, state is cleaned)
     container_name: rest
@@ -76,12 +80,12 @@ services:
     ports:
       - 8181:8181
     environment:
-      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - AWS_REGION=$AWS_REGION
-      - CATALOG_WAREHOUSE=s3://warehouse
-      - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
-      - CATALOG_S3_ENDPOINT=http://minio:9000
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_REGION: $AWS_REGION
+      CATALOG_WAREHOUSE: s3a://warehouse
+      CATALOG_IO__IMPL: org.apache.iceberg.aws.s3.S3FileIO
+      CATALOG_S3_ENDPOINT: http://minio:9000
     networks:
       - data-stack
 
@@ -99,9 +103,9 @@ services:
       - spark-warehouse-data:/home/iceberg/warehouse
       - .data/notebooks:/home/iceberg/notebooks/notebooks
     environment:
-      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - AWS_REGION=$AWS_REGION
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_REGION: $AWS_REGION
     networks:
       - data-stack
 
@@ -121,3 +125,7 @@ volumes:
 networks:
   data-stack:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.5.0/24
+          gateway: 10.10.5.1
