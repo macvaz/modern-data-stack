@@ -35,7 +35,6 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
-bin/download_s3_jars.sh
 ```
 ### Testing installation
 
@@ -74,13 +73,13 @@ ls -al /home/iceberg/spark-events/*
 
 ## Using Jupyter notebooks
 
-Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, **all coding examples are developed in python**. 
+Once installation is properly set up, using **jupyter notebooks** is much more covenient than CLI tools. Since python kernel is distributed in the spark-iceberg docker image, **all coding examples are developed in python and SQL**. No scala is used to simplify reading the code. 
 
-**Open the notebook** called [Testing Iceberg](http://localhost:8000/notebooks). Iceberg project mantains a very good [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table) that complements this notebook.
+**Open the notebook** called [Testing Iceberg tables](http://localhost:8000/notebooks/Testing%20Iceberg%20tables.ipynb). This notebook is totally inspired by excelent Iceberg [quick start guide](https://iceberg.apache.org/spark-quickstart/#creating-a-table).
 
-The `iceberg` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. This file sets Iceberg as default table format for this catalog. It alse sets Iceberg REST catalog as metastore for the catalog.
+The `hms` catalog is configured in [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf) and passed to the spark container as the spark-defaults.conf file. This file sets Iceberg as default table format for this catalog. It alseo sets HMS as metastore.
 
-If everything is properly setup, a new namespace (a.k.a database) called `nyc` will be created in the Iceberg REST catalog. This namespace contains also a table called `taxis`. This table is created using iceberg table format since `iceberg` catalog is configured to use `iceberg` by default.
+If everything is properly setup, a new namespace (a.k.a database) called `nyc100` will be created in HMS executing the first cell. Al tables created in this notebook, using bot python spark API and SQL, uses Iceberg table format due to the spark-defaults defined [here](docker/spark-iceberg/conf/spark-defaults.iceberg.conf).
 
 ## Using Trino
 
@@ -89,13 +88,12 @@ trino client is installed in the trino container:
 docker-compose exec trino trino
 ```
 
-Using trino with the **iceberg catalog** stores all metadata in Iceberg TEST data catalog. This Big Data table (**iceberg.nyc.sales**) can be read using both trino SQL and by native Big Data technologies like Apache Spark. 
+Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a trino catalog, using Iceberg connector and poiting to HMS, can bbe checked in [this file](docker/trinodb/conf/catalog/hms.properties). Tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS minio_iceberg.nyc2 
-WITH (location = 's3a://warehouse/nyc2');
+CREATE SCHEMA IF NOT EXISTS hms.nyc200 WITH (location = 's3a://warehouse/nyc200');
 
-CREATE TABLE IF NOT EXISTS minio_iceberg.nyc2.sales2 (
+CREATE TABLE IF NOT EXISTS hms.nyc200.sales_from_trino (
   productcategoryname VARCHAR,
   productsubcategoryname VARCHAR,
   productname VARCHAR,
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS minio_iceberg.nyc2.sales2 (
   orderQuantity INTEGER
 );
 
-select * from minio_iceberg.nyc2.sales2;
+select * from hms.nyc200.sales_from_trino;
 ```
 
 ## Compatibility issues
