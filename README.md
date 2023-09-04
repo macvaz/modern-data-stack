@@ -7,7 +7,7 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **HMS (Hive MetaStore)**: v3.1.3
 - **Apache Spark**: v3.4.1
 - **Apache Iceberg**: v1.6
-- **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree/notebooks
+- **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
 There are also some technologies tested but **finally discarted** (have a look to the incompatibili  ties section):
 
