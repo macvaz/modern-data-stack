@@ -126,7 +126,7 @@ select * from hms.nyc200.sales_from_trino;
 
 Additionally, since trino does not allow to redefine the S3 endpoint when using the REST catalog, trino will always try to connect to AWS S3 public cloud and not to local MinIO. Iceberg REST catalog is not an option currently for this PoC.
 
-**Spark works perfectly well with Iceberg REST catalog** and the spark-defaults needed are is [this file](docker/spark-iceberg/conf/spark-defaults.iceberg.conf). However, the **selected metastore is HMS** mainly for compatibility issues (specially with trino)
+**Spark works perfectly well with Iceberg REST catalog** and the spark-defaults needed are is [this file](docker/spark-iceberg/conf/spark-defaults.conf). However, the **selected metastore is HMS** mainly for compatibility issues (specially with trino)
 
 ## Useful links
 
