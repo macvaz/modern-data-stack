@@ -55,6 +55,8 @@ Just past this code in the shell in order to test the connection between Spark, 
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.Row
 
+spark.sql("CREATE DATABASE IF NOT EXISTS nyc300 LOCATION 's3a://warehouse/nyc300';")
+
 val schema = StructType( Array(
     StructField("vendor_id", LongType,true),
     StructField("trip_id", LongType,true),
@@ -64,7 +66,7 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("hms.nyc.test").create()
+df.writeTo("hms.nyc300.test").create()
 ```
 
 No errors should be raised. For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
