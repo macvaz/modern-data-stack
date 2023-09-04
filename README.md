@@ -29,7 +29,7 @@ docker-compose up -d
 
 ### Initializing datalake
 
-Since this repo is for teaching purposes, a `.env file` is provided. The access keys are totally disposable and not used in any system. For an easy setup, it's recommended to **keep that access keys unaltered to avoid changing the following configuration files**:
+Since this repo is for teaching purposes, a `.env file` is provided. The provided access keys are totally disposable and not used in any system. For an easy setup, it's recommended to **keep that access keys unaltered to avoid changing the following configuration files**:
 * [HMS metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml)
 * [spark-defaults.conf](docker/spark-iceberg/conf/spark-defaults.conf)
 * [trino catalog](docker/trinodb/conf/catalog/hms.properties)
@@ -49,7 +49,7 @@ To test the installation, just start a scala-based spark shell, just type:
 docker-compose exec spark spark-shell 
 ```
 
-Just past this code in the shell in order to test the connection between Spark and iceberg REST metastore:
+Just past this code in the shell in order to test the connection between Spark, Iceberg runtime and Hive metastore:
 
 ```scala
 import org.apache.spark.sql.types._
@@ -64,7 +64,7 @@ val schema = StructType( Array(
 ))
 
 val df = spark.createDataFrame(spark.sparkContext.emptyRDD[Row],schema)
-df.writeTo("nyc.test").create()
+df.writeTo("hms.nyc.test").create()
 ```
 
 No errors should be raised. For debugging purposes, log files are always a good place to look at. Log files are stored in spark docker container and can checked like this:
