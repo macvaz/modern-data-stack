@@ -84,7 +84,7 @@ Once installation is properly set up, using **jupyter notebooks** is much more c
 
 The Spark `hms catalog` is configured in [this file](docker/spark-iceberg/conf/spark-defaults.conf) and passed to the spark container as the spark-defaults.conf file. This file sets Iceberg as default table format for this catalog. It also sets HMS as catalog's metastore.
 
-If everything is properly setup, a new namespace (a.k.a database) called `nyc100` will be created in HMS executing the first cell. Al tables created in this notebook, using both python spark API and SQL, uses Iceberg table format underneath due to the spark-defaults defined [here](docker/spark-iceberg/conf/spark-defaults.conf).
+If everything is properly setup, a new namespace (a.k.a database) called `nyc100` will be created in HMS executing the first notebook cell. All tables created in this notebook, using both python spark API and SQL, uses Iceberg table format underneath due to the spark-defaults defined [here](docker/spark-iceberg/conf/spark-defaults.conf).
 
 ## Using Trino
 
@@ -93,7 +93,7 @@ trino client is installed in the trino container. Just connect to it:
 docker-compose exec trino trino
 ```
 
-Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog called hms`, using Iceberg connector and poiting to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). Iceberg tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
+Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog` called **hms**, using Iceberg connector and poiting to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). Iceberg tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
 
 ```sql
 CREATE SCHEMA IF NOT EXISTS hms.nyc200 WITH (location = 's3a://warehouse/nyc200');
