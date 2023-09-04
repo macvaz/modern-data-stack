@@ -9,7 +9,7 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
-There are also some technologies tested but **finally discarted** (have a look to the incompatibili  ties section):
+There are also some technologies tested but **finally discarted** (have a look to the incompatibilities section):
 
 - **Iceberg REST catalog**: v.16 - not compatible with trino when warehouse is NOT in AWS S3
 
@@ -122,7 +122,7 @@ select * from hms.nyc200.sales_from_trino;
 
 ### Apache Iceberg REST catalog
 
-**[2023/09/03]** Is compatible with [several metastore catalogs](https://iceberg.apache.org/concepts/catalog/) apart from Hive Metastore like REST Catalog and JDBC Catalog. However [trino does not have full suport](https://trino.io/docs/current/connector/metastores.html) for them, making imposible to crate views and materialized views with REST Catalog and JDBC Catalog. Consequently, modern-data-stack is still based on Hive MetaStore (HMS) until this limitations are overcame.
+**[2023/09/03]** Trino is compatible with [several metastore catalogs](https://iceberg.apache.org/concepts/catalog/) apart from Hive Metastore like REST Catalog and JDBC Catalog. However [trino does not have full suport](https://trino.io/docs/current/connector/metastores.html) for them, making imposible to crate views and materialized views with REST Catalog and JDBC Catalog. Consequently, modern-data-stack is still based on Hive MetaStore (HMS) until this limitations are overcame.
 
 Additionally, since trino does not allow to redefine the S3 endpoint when using the REST catalog, trino will always try to connect to AWS S3 public cloud and not to local MinIO. Iceberg REST catalog is not an option currently for this PoC.
 
