@@ -9,14 +9,11 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
-There are also some technologies tested but **finally discarted** (have a look to the incompatibilities section):
-
-- **Iceberg REST catalog**: v.16 - not compatible with trino when warehouse is NOT in AWS S3
-
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
 - **OpenMetadata** (data catalog)
 - **Open Policy Agent (OPA)** (data security)
+- **DBT** (ETLs)
 
 
 ## Installation
