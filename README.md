@@ -2,7 +2,7 @@
 
 Minimal example integrating docker images of the following Big Data open-source projects:
 
-- **trino**: v425 - http://localhost:8080
+- **Trino**: v443 - http://localhost:8080
 - **MinIO**: v2023.08.23 - http://localhost:9000
 - **HMS (Hive MetaStore)**: v3.1.3
 - **Apache Spark**: v3.4.1
@@ -16,7 +16,7 @@ There are also some technologies tested but **finally discarted** (have a look t
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
 - **OpenMetadata** (data catalog)
-- **Apache Ranger** (data security)
+- **Open Policy Agent (OPA)** (data security)
 
 
 ## Installation
