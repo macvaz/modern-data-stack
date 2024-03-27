@@ -9,7 +9,7 @@ Minimal example integrating different open-source technologies in order to creat
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
-## Code structure
+### Code structure
 
 All software componentes are distributed based on docker containers. There is a compose file automates the deployment of all technologies easily. All configuration files of the components are inside [docker directory](docker).
 
@@ -19,7 +19,7 @@ Both Spark (for data creation) anf Trino (for interactive data exposition) use t
 
 Inside [datasets folder](datasets) are a small-sized files with samples of the datasets used.
 
-## Other technologies to be considered
+### Other technologies to be considered
 
 Since only the above technologies are successfully integrated, other complementary and promising projects will be considered in a future like:
 
