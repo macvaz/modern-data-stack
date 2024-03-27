@@ -72,7 +72,7 @@ trino client is installed in the trino container. To access trino using a CLI, j
 docker-compose exec trino trino
 ```
 
-A very convenient way of connecting to trino is through its JDBC API. Using a generic JDBC client like [DBeaver Community](https://dbeaver.io/) is the recommended way of using trino.
+A very convenient way of connecting to trino is through its JDBC API. Using a **generic JDBC client** like [DBeaver Community](https://dbeaver.io/) is the recommended way of using trino.
 
 Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog` called **hms**, using Iceberg connector and pointing to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). 
 
