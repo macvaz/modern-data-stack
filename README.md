@@ -1,17 +1,19 @@
 # Modern data stack
 
-Minimal example integrating different open-source technologies in order to create a working **open data lakehouse solution based on Apache Iceberg**. The technologies used are:
+Minimal example integrating different open-source technologies in order to create a working **open data lakehouse** solution based on **Apache Iceberg**. Core technologies used are:
 
-- **Trino**: v443 - http://localhost:8080
-- **MinIO**: v2023.08.23 - http://localhost:9000
-- **HMS (Hive MetaStore)**: v3.1.3
-- **Apache Spark**: v3.4.1
-- **Apache Iceberg**: v1.6
-- **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
+| Component | Description | Version |  URL  |
+| --------- | ----------- | ------- | ----- |
+| Trino     | Federated query engine | v443 | http://localhost:8080
+| MinIO     | Object store   |  v2023.08.23  | http://localhost:9000
+| Hive MestaStore (HMS) | Metadata respository |    v.3.1.3
+| Apache Spark | Distributed computation engine | v3.4.1 | 
+| Apache Iceberg | Analytics table open format | v1.6
+| Jupyter notebook | Web-based computational documents | v1.0.0 | http://localhost:8000/tree
 
 ### Code structure
 
-All software componentes are distributed based on docker containers. There is a compose file automates the deployment of all technologies easily. All configuration files of the components are inside [docker directory](docker).
+All software **components are distributed based on docker images**. There is a docker-compose file that automates the deployment of all components easily. All components' configuration files are inside [docker directory](docker).
 
 In the [notebooks folder](notebooks), there is a **Jupyter notebook showing a simplified Spark-based ETL batch job** that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
 
@@ -23,10 +25,11 @@ Inside [datasets folder](datasets) are a small-sized files with samples of the d
 
 Since only the above technologies are successfully integrated, other complementary and promising projects will be considered in a future like:
 
-- **OpenMetadata** (data catalog)
-- **Open Policy Agent (OPA)** (data security)
-- **DBT** (ETLs)
-
+| Component | Description | 
+| --------- | ----------- |
+| OpenMetadata     | Metadata management (catalog, lineage) | 
+| Open policy agent (OPA)     | Centralized access policy repository and enforcing system   |  
+| DBT | SQL-first transformation workflow 
 
 ## Installation
 
