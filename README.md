@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example integrating different open-source technologies in order to create a working open data lakehouse solution. The open table format used is **Apache Iceberg** and the technologies used are:
+Minimal example integrating different open-source technologies in order to create a working **open data lakehouse solution**. The open table format used is **Apache Iceberg** and the technologies used are:
 
 - **Trino**: v443 - http://localhost:8080
 - **MinIO**: v2023.08.23 - http://localhost:9000
@@ -9,7 +9,7 @@ Minimal example integrating different open-source technologies in order to creat
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
-The repo contains a Spark-based Jupyter notebook showing a sample ETL batch job that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
+The repo contains a **Spark-based Jupyter notebook showing a simplified ETL batch job** that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
 
 Both Spark (for data creation) anf Trino (for interactive data exposition) use the lakehouse capabilities through Hive metastore (HMS) creating a seamless integration.
 
