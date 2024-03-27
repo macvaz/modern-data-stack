@@ -58,7 +58,7 @@ Since python kernel is distributed in the spark-iceberg docker image, **all codi
 
 **Open the notebook** called [Spark ETL](http://localhost:8000/notebooks/Spark_ETL.ipynb) and execute it. The following database objects will be created in the lakehouse:
  - `sales_db` database with `sales_summary` table
- - `trip_db` database with `trips`` table 
+ - `trip_db` database with `trips` table 
 
 The Spark `hms catalog` is configured in [this file](docker/spark-iceberg/conf/spark-defaults.conf) and passed to the spark container as the spark-defaults.conf file. This file sets Iceberg as default table format for this catalog. It also sets HMS as catalog's metastore.
 
