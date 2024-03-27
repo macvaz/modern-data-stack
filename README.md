@@ -1,6 +1,8 @@
 # Modern data stack
 
-Minimal example integrating different open-source technologies in order to create a working **open data lakehouse** solution based on **Apache Iceberg**. Core technologies used are:
+Minimal example integrating different open-source technologies in order to create a working **open data lakehouse** solution based on **Apache Iceberg**. 
+
+Core technologies used are:
 
 | Component | Description | Version |  URL  |
 | --------- | ----------- | ------- | ----- |
@@ -39,17 +41,17 @@ Start all docker containers with:
 docker-compose up -d
 ```
 
-### Initializing datalake
+### Initializing lakehouse
 
 Since this repo is for teaching purposes, a `.env file` is provided. The provided access keys are totally disposable and not used in any system. For an easy setup, it's recommended to **keep that access keys unaltered to avoid changing the following configuration files**:
 * [HMS metastore-site.xml](docker/hive-metastore/conf/metastore-site.xml)
 * [spark-defaults.conf](docker/spark-iceberg/conf/spark-defaults.conf)
 * [trino catalog](docker/trinodb/conf/catalog/hms.properties)
 
-To provision access keys and creating the bucket in the MinIO server, just type:
+Initializing our open lakehouse requires invoking MinIO object store API. To provision in MinIO a object store `access key`, `access secret` and the `lakehouse` S3 bucket in the MinIO server, just type:
 
 ```bash
-docker-compose exec minio bash /opt/bin/init_datalake.sh
+docker-compose exec minio bash /opt/bin/init_lakehouse.sh
 ```
 
 ## Using Spark via Jupyter notebooks
@@ -64,15 +66,20 @@ The Spark `hms catalog` is configured in [this file](docker/spark-iceberg/conf/s
 
 ## Using Trino
 
-trino client is installed in the trino container. Just connect to it:
+trino client is installed in the trino container. To access trino using a CLI, just connect to it:
+
 ```bash
 docker-compose exec trino trino
 ```
 
-Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog` called **hms**, using Iceberg connector and poiting to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). Iceberg tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
+A very convenient way of connecting to trino is through its JDBC API. Using a generic JDBC client like [DBeaver Community](https://dbeaver.io/) is the recommended way of using trino.
+
+Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog` called **hms**, using Iceberg connector and pointing to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). 
+
+Iceberg tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS hms.trip_trino_db WITH (location = 's3a://lakehouse/warehouse/trips_db');
+CREATE SCHEMA IF NOT EXISTS hms.trip_trino_db WITH (location = 's3a://lakehouse/warehouse/trip_trino_db');
 
 CREATE TABLE IF NOT EXISTS hms.trip_trino_db.sales (
   productcategoryname VARCHAR,
@@ -85,6 +92,22 @@ CREATE TABLE IF NOT EXISTS hms.trip_trino_db.sales (
 );
 
 select * from hms.trip_trino_db.sales;
+```
+
+Databases and tables registrered in Hive MetaStore are shared by different technologies. In the next snippet, a new table created from Trino is added to a database created by Spark:
+
+```sql
+CREATE TABLE IF NOT EXISTS hms.trip_db.sales_from_trino (
+  productcategoryname VARCHAR,
+  productsubcategoryname VARCHAR,
+  productname VARCHAR,
+  customerName VARCHAR,
+  salesTerritoryCountry VARCHAR,
+  salesOrderNumber VARCHAR,
+  orderQuantity INTEGER
+);
+
+select * from hms.trip_db.sales_from_trino ;
 ```
 
 ## Useful links
