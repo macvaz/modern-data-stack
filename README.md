@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example integrating docker images of the following Big Data open-source projects:
+Minimal example integrating different open-source technologies in order to create a working open data lakehouse solution. The open table format used is **Apache Iceberg** and the technologies used are:
 
 - **Trino**: v443 - http://localhost:8080
 - **MinIO**: v2023.08.23 - http://localhost:9000
@@ -8,6 +8,10 @@ Minimal example integrating docker images of the following Big Data open-source 
 - **Apache Spark**: v3.4.1
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
+
+The repo contains a Spark-based Jupyter notebook showing a sample ETL batch job that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
+
+Both Spark (for data creation) anf Trino (for interactive data exposition) use the lakehouse capabilities through Hive metastore (HMS) creating a seamless integration.
 
 Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
 
@@ -36,9 +40,6 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
-Add this jars to spark /jar folder:
--rw-r--r-- 1 root root    962685 Jul 29  2022 hadoop-aws-3.3.4.jar
--rw-r--r-- 1 root root 310582214 Dec 16  2022 aws-java-sdk-bundle-1.12.367.jar
 
 ### Testing installation
 
