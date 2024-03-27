@@ -72,7 +72,7 @@ services:
     networks:
       data-stack:
         aliases:
-          - datalake.minio #Nomenclature required by AWS S3 client files (bucketName.hostName)
+          - lakehouse.minio #Nomenclature required by Spark writing into MinIO (bucketName.hostName)
         ipv4_address: 10.10.5.100
   
   spark:
@@ -89,6 +89,7 @@ services:
       - ./docker/spark-iceberg/conf/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf:ro #rewriting spark defaults
       - spark-warehouse-data:/home/iceberg/warehouse
       - ./notebooks:/home/iceberg/notebooks
+      - ./datasets:/home/iceberg/datasets
     environment:
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID #Used by Iceberg io-impl
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY #Used by Iceberg io-impl
