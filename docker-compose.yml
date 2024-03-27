@@ -72,13 +72,14 @@ services:
     networks:
       data-stack:
         aliases:
-          - warehouse.minio #Required by AWS S3 SDK
+          - datalake.minio #Nomenclature required by AWS S3 client files (bucketName.hostName)
         ipv4_address: 10.10.5.100
   
   spark:
     hostname: spark
     container_name: spark
-    image: tabulario/spark-iceberg #official spark+iceberg docker image
+    #image: tabulario/spark-iceberg #official spark+iceberg docker image
+    image: spark
     ports:
       - 7077:8080 # Web UI Spark master
       - 8000:8888 # Web UI Jupyter notebook

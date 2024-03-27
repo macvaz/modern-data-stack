@@ -36,6 +36,10 @@ To provision access keys and creating the bucket in the MinIO server, just type:
 ```bash
 docker-compose exec minio bash /opt/bin/init_datalake.sh
 ```
+Add this jars to spark /jar folder:
+-rw-r--r-- 1 root root    962685 Jul 29  2022 hadoop-aws-3.3.4.jar
+-rw-r--r-- 1 root root 310582214 Dec 16  2022 aws-java-sdk-bundle-1.12.367.jar
+
 ### Testing installation
 
 Since all Spark source base runs on JVM platform, using spark-shell (instead of pyspark) is recommended for troubleshooting installation errors. This avoid confusing wrapped Python-style errors of JVM components.  
