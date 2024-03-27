@@ -1,6 +1,6 @@
 # Modern data stack
 
-Minimal example integrating different open-source technologies in order to create a working **open data lakehouse solution**. The open table format used is **Apache Iceberg** and the technologies used are:
+Minimal example integrating different open-source technologies in order to create a working **open data lakehouse solution based on Apache Iceberg**. The technologies used are:
 
 - **Trino**: v443 - http://localhost:8080
 - **MinIO**: v2023.08.23 - http://localhost:9000
@@ -9,11 +9,19 @@ Minimal example integrating different open-source technologies in order to creat
 - **Apache Iceberg**: v1.6
 - **Jupyter notebooks**: v1.0.0 - http://localhost:8000/tree
 
-The repo contains a **Spark-based Jupyter notebook showing a simplified ETL batch job** that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
+## Code structure
 
-Both Spark (for data creation) anf Trino (for interactive data exposition) use the lakehouse capabilities through Hive metastore (HMS) creating a seamless integration.
+All software componentes are distributed based on docker containers. There is a compose file automates the deployment of all technologies easily. All configuration files of the components are inside [docker directory](docker).
 
-Since the open-source big data ecosystem is vibrant, this **modern-data-stack is always evolving**. Currently, only the above projects are integrated but in a near future, other complementary and promising projects will be considered like:
+In the [notebooks folder](notebooks), there is a **Jupyter notebook showing a simplified Spark-based ETL batch job** that generates data products stored in MinIO object storage. All data products are registered into the Hive MetaStore (HMS) service as Apache Iceberg tables. 
+
+Both Spark (for data creation) anf Trino (for interactive data exposition) use the lakehouse capabilities through Hive metastore (HMS), creating a seamless integration of ETL workloads and interactive querying.
+
+Inside [datasets folder](datasets) are a small-sized files with samples of the datasets used.
+
+## Other technologies to be considered
+
+Since only the above technologies are successfully integrated, other complementary and promising projects will be considered in a future like:
 
 - **OpenMetadata** (data catalog)
 - **Open Policy Agent (OPA)** (data security)
