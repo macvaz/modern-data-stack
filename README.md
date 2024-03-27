@@ -48,7 +48,7 @@ Since this repo is for teaching purposes, a `.env file` is provided. The provide
 * [spark-defaults.conf](docker/spark-iceberg/conf/spark-defaults.conf)
 * [trino catalog](docker/trinodb/conf/catalog/hms.properties)
 
-Initializing our open lakehouse requires invoking MinIO object store API. To provision in MinIO a object store `access key`, `access secret` and the `lakehouse` S3 bucket in the MinIO server, just type:
+Initializing our open lakehouse requires invoking MinIO object store API. To provision in MinIO a object store `access key`, `access secret` and a `S3 bucket` called `lakehouse` in the MinIO server, just type:
 
 ```bash
 docker-compose exec minio bash /opt/bin/init_lakehouse.sh
