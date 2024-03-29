@@ -74,41 +74,7 @@ docker-compose exec trino trino
 
 A very convenient way of connecting to trino is through its JDBC API. Using a **generic JDBC client** like [DBeaver Community](https://dbeaver.io/) is the recommended way of using trino.
 
-Using trino with the **iceberg connector** sets the default table format to Iceberg. Creating a `trino catalog` called **hms**, using Iceberg connector and pointing to HMS, is done in  [this file](docker/trinodb/conf/catalog/hms.properties). 
-
-Iceberg tables created from Spark in HMS can be used seamlessly from trino and vice-versa.  
-
-```sql
-CREATE SCHEMA IF NOT EXISTS hms.trip_trino_db WITH (location = 's3a://lakehouse/warehouse/trip_trino_db');
-
-CREATE TABLE IF NOT EXISTS hms.trip_trino_db.sales (
-  productcategoryname VARCHAR,
-  productsubcategoryname VARCHAR,
-  productname VARCHAR,
-  customerName VARCHAR,
-  salesTerritoryCountry VARCHAR,
-  salesOrderNumber VARCHAR,
-  orderQuantity INTEGER
-);
-
-select * from hms.trip_trino_db.sales;
-```
-
-Databases and tables registrered in Hive MetaStore are shared by different technologies. In the next snippet, a new table created from Trino is added to a database created by Spark:
-
-```sql
-CREATE TABLE IF NOT EXISTS hms.trip_db.sales_from_trino (
-  productcategoryname VARCHAR,
-  productsubcategoryname VARCHAR,
-  productname VARCHAR,
-  customerName VARCHAR,
-  salesTerritoryCountry VARCHAR,
-  salesOrderNumber VARCHAR,
-  orderQuantity INTEGER
-);
-
-select * from hms.trip_db.sales_from_trino ;
-```
+Some sample SQL queries for the data model exposed by trino can be found in the [sql](sql) folder.
 
 ## Useful links
 
