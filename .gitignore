@@ -1,2 +1,3 @@
 lib/*.jar
-data/notebooks/.ipynb_checkpoints
+notebooks/.ipynb_checkpoints
+datasets/olympics/
