@@ -83,3 +83,28 @@ with all_games as (
 select gc.*
 from games_count gc
 join all_games_count agc on gc.games_count = agc.games_count
+
+-- QUERY 18
+
+with medals as (
+	select 
+		case when medal = 'Gold' then 1 else 0 end as gold_medal,
+		case when medal = 'Silver' then 1 else 0 end as silver_medal,
+		case when medal = 'Bronze' then 1 else 0 end as bronze_medal,
+		region
+	from hms.data_db.olympic_events e
+	join hms.data_db.olympic_regions r on r.noc = e.noc
+),
+	medals_count as (
+	select 
+		region, 
+		sum(gold_medal) as gold_count,
+		sum(silver_medal) as silver_count,
+		sum(bronze_medal) as bronze_count
+	from medals
+	group by region
+)
+select *
+from medals_count
+where gold_count = 0 and (silver_count > 0 or bronze_count > 0)
+order by 3,4
