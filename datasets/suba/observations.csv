@@ -1,0 +1,2 @@
+datapoint_id;variable_id;module_id;taxonomy_id;open_cols_keys;open_cols_values
+XBRL:MET(33232):IDQ(20):GCC(*):INC(*);XBRL:MET(33232):IDQ(20):GCC(GCC_23_32):INC(INC_44_33);64443;"COREP v3.3";['GCC', 'INC'];['CC_23_32', 'INC_44_33']
