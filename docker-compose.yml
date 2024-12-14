@@ -14,6 +14,15 @@ services:
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     networks:
       - data-stack
+    
+  mage:
+    hostname: mage
+    container_name: mage
+    image: mageai/mageai:latest
+    ports: 
+      - 6789:6789
+    networks:
+      - data-stack
 
   mariadb:
     hostname: mariadb
@@ -68,6 +77,7 @@ services:
       MINIO_DOMAIN: minio #Required by AWS S3 SDK
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID #Setting MinIO access key
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY #Setting MinIO access secret
+      MINIO_API_SELECT_PARQUET: "on"
     command: server --console-address ":9001" /data
     networks:
       data-stack:
@@ -78,8 +88,7 @@ services:
   spark:
     hostname: spark
     container_name: spark
-    #image: tabulario/spark-iceberg #official spark+iceberg docker image
-    image: spark
+    image: tabulario/spark-iceberg #official spark+iceberg docker image
     ports:
       - 7077:8080 # Web UI Spark master
       - 8000:8888 # Web UI Jupyter notebook

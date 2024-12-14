@@ -84,8 +84,44 @@ select gc.*
 from games_count gc
 join all_games_count agc on gc.games_count = agc.games_count
 
--- QUERY 18
+-- QUERY 6
+with all_games_count as (
+		select count(distinct games) as games_count
+		from hms.data_db.olympic_events
+		where season = 'Summer'
+),   
+	sport_count as (
+		select sport, count (distinct games) as games_count
+		from hms.data_db.olympic_events
+		where season = 'Summer'
+		group by sport
+)
+select sport 
+from sport_count sc
+join all_games_count agc on sc.games_count = agc.games_countdd
 
+-- QUERY 7
+with all_sports as (
+		select distinct sport, games
+		from hms.data_db.olympic_events
+)
+select sport
+from all_sports
+group by sport
+having count(games) = 1
+order by 1
+
+-- QUERY 8
+with sports as (
+		select distinct games, sport
+		from hms.data_db.olympic_events 
+)
+select games, count(sport) as num_sports
+from sports
+group by games
+order by 2 desc
+
+-- QUERY 18
 with medals as (
 	select 
 		case when medal = 'Gold' then 1 else 0 end as gold_medal,
@@ -108,3 +144,28 @@ select *
 from medals_count
 where gold_count = 0 and (silver_count > 0 or bronze_count > 0)
 order by 3,4
+
+-- QUERY 19
+--Alternative 1: With ctes + case when + sum
+with india_events as (
+		select games, sport, case when medal in ('Gold', 'Silver', 'Bronze') then 1 else 0 end as medal_count
+		from hms.data_db.olympic_events 
+		where noc = 'IND'
+), 
+	india_medals as (
+		select sport, sum(medal_count) as total_medals
+		from india_events
+		group by sport
+	)
+select *
+from india_medals
+order by 2 desc
+limit 1
+
+-- Alternative 2: Using count and != (instead of case when)
+select sport, count(medal)
+from hms.data_db.olympic_events 
+where noc = 'IND' and medal != 'NA'
+group by 1
+order by 2 desc
+limit 1

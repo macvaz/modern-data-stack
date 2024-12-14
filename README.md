@@ -12,6 +12,7 @@ Core technologies used are:
 | Apache Spark | Distributed computation engine | v3.4.1 | 
 | Apache Iceberg | Analytics table open format | v1.6
 | Jupyter notebook | Web-based computational documents | v1.0.0 | http://localhost:8000/tree
+| Mage AI | Job orchestrator | v0.9.73| http://localhost:6789
 
 ### Code structure
 
