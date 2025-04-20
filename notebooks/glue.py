@@ -35,3 +35,17 @@ spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
 )
 
 job.commit()
+
+"""
+CREATE EXTERNAL TABLE poc.spark_partition_bucket(
+  mpg double, 
+  gear int)
+PARTITIONED BY ( 
+  model string)
+LOCATION 's3://testddfv1/spark_bucket2'
+TBLPROPERTIES (
+  'format'='parquet',
+  'bucketing_format'='spark',  
+  'write.compression'='zstd'
+)
+"""
