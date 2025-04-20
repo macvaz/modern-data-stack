@@ -37,6 +37,8 @@ spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
 job.commit()
 
 """
+https://aws.amazon.com/es/blogs/big-data/optimize-data-layout-by-bucketing-with-amazon-athena-and-aws-glue-to-accelerate-downstream-queries/
+
 CREATE EXTERNAL TABLE poc.spark_partition_bucket(
   mpg double, 
   gear int)
